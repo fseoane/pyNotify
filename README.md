@@ -6,9 +6,10 @@ It provides web based service, API,  and also mobile application, but I was miss
 NOTE: "Exit" from system tray icon menu is not working (still under investigation)
 
 ## Installation
-Download the release package and copy itś contents to /opt/pyNotify
-This release package has a binary already compiled and ready to execute on Linux
-Just edit the file pyNotify.conf in that same folder (/opt/pyNotify) and set the proper values for:
+Download the release package and copy itś contents to /opt/pyNotify. 
+This release package has a binary already compiled and ready to execute on Linux.
+The bash script (install.sh) inside the realease package will copy all the necessary files to /opt/pyNotify in one go.....
+....just edit the file pyNotify.conf in that destination folder (/opt/pyNotify) and set the proper values for:
 - gotify server url, and 
 - gotify client token  (you may need to generate this in your Gotify server)
 
