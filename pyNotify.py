@@ -29,6 +29,7 @@ def checkIfProcessRunning(processName):
 
 
 async def log_push_messages(conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon):
+	global EXIT_REQUESTED
 	async_gotify = AsyncGotify(
 		base_url=conf_gotify_url,
 		client_token=conf_client_token,
@@ -39,12 +40,15 @@ async def log_push_messages(conf_gotify_url,conf_client_token,conf_notification_
 		subprocess.run(["notify-send", "-u", "normal", "-i", conf_notification_icon, "-t", "3000",msg["title"], msg["message"]],check=True)
 
 def tray_icon_on_clicked(tray_icon, item):
-	if str(item) == "Exit":
+	global runner
+	if str(item) == "Quit":
 		tray_icon.stop()
-		#sys.exit(0)
-  
-  
+		runner.close()
+		sys.exit(0)
+
 if __name__ == "__main__":
+	global runner
+
 	PATH_SEPARATOR = '/'
 	SCRIPT_PATH = os.getcwd()
 	if (SCRIPT_PATH[0]!='/'):
@@ -58,12 +62,7 @@ if __name__ == "__main__":
 		print ("{} process already exists. {} seems to be running. Exiting".format(processName,processName))
 		sys.exit(1) 
 
-	try:
-		PATH_SEPARATOR = '/'
-		SCRIPT_PATH = os.getcwd()
-		if (SCRIPT_PATH[0]!='/'):
-			PATH_SEPARATOR = '\\'
-   
+	try:   
 		print ("Loading config from: {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'))
 		config = configparser.ConfigParser()
 		config.read(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
@@ -79,7 +78,7 @@ if __name__ == "__main__":
 
 		tray_icon = pystray.Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
 			menu=pystray.Menu(
-				pystray.MenuItem("Exit", tray_icon_on_clicked)
+				pystray.MenuItem("Quit", tray_icon_on_clicked)
 			)
 		)
 		
@@ -88,6 +87,8 @@ if __name__ == "__main__":
   
 		# Run the gotify listener second thread
 		print ("...connecting to : {} as client: {}".format(conf_gotify_url,conf_client_token))
-		asyncio.run(log_push_messages(conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon))
+		with asyncio.Runner() as runner:
+			runner.run(log_push_messages(conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon))
+		#asyncio.run(log_push_messages(conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon))
 	finally:
 		print("Finishing...")
