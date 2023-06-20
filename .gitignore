@@ -3,4 +3,4 @@ dist/*
 .env/*
 build/*
 .pyNotify.conf
-.pyNotify.spec
+pyNotify.spec
