@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name[en_US]=pyNotify 
+Categories=Notification;
+Path=/opt/pyNotify
+Icon[en_US]=/opt/pyNotify/notification.svg
+Exec=/opt/pyNotify/pyNotify
