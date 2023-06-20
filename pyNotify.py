@@ -39,6 +39,7 @@ async def log_push_messages(conf_gotify_url,conf_client_token,conf_notification_
 		playsound(conf_notification_sound)
 		subprocess.run(["notify-send", "-u", "normal", "-i", conf_notification_icon, "-t", "3000",msg["title"], msg["message"]],check=True)
 
+
 def tray_icon_on_clicked(tray_icon, item):
 	global runner
 	if str(item) == "Quit":
