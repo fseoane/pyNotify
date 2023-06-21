@@ -5,17 +5,14 @@ sudo apt install libcairo2-dev libjpeg-dev libgif-dev
 sudo apt install libgirepository1.0-dev
 sudo apt install libappindicator3-dev
 
-#sudo apt install libayatana-appindicator3-1
-
-# mkdir -p .env 
-# python3.11 -m venv .env
-# source .env/bin/activate
+mkdir -p .env 
+python3.11 -m venv .env
+source .env/bin/activate
 
 python3.11  -m pip install --upgrade pip setuptools wheel
 
 python3.11 -m pip install gotify
 python3.11 -m pip install gotify[stream]
-#python3.11 -m pip install playsound
 python3.11 -m pip install pyinstaller
 python3.11 -m pip install pycairo
 python3.11 -m pip install pygame
@@ -35,5 +32,5 @@ cp pyNotify.desktop dist
 cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf
 
-# deactivate
-# rm -rf .env
+deactivate
+rm -rf .env
