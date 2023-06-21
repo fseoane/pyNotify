@@ -16,8 +16,8 @@ python3.11  -m pip install --upgrade gotify[stream]
 #python3.11  -m pip install --upgrade playsound
 python3.11  -m pip install --upgrade pygame
 python3.11  -m pip install --upgrade pyinstaller
-#python3.11  -m pip install --upgrade pycairo
-#python3.11  -m pip install --upgrade pygobject
+python3.11  -m pip install --upgrade pycairo
+python3.11  -m pip install --upgrade pygobject
 python3.11  -m pip install --upgrade pystray
 python3.11  -m pip install --upgrade pillow
 python3.11  -m pip install --upgrade websockets
