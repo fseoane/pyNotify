@@ -6,6 +6,7 @@ It provides web based service, API,  and also mobile application, but I was miss
 
 ## Requirements
 It requires AppIndicator3.
+
 To install this library:
 - Arch  : sudo pacman -S libappindicator-gtk3
 - Debian: sudo apt install gir1.2-appindicator3-0.1
