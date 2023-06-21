@@ -5,12 +5,15 @@ Gotify server is open source software for notifications that can be deployed on-
 It provides web based service, API,  and also mobile application, but I was missing a working gnome tray notification app for receiving those notifications directly in my gnome desktop (wayland), so I build this.
 
 ## Requirements
-It requires AppIndicator3.
+It requires Ayatana AppIndicator3 and Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support".
 
-To install this library:
+To install support for Ayatana AppIndicator3 library:
 - Arch  : sudo pacman -S libappindicator-gtk3
 - Debian: sudo apt install gir1.2-appindicator3-0.1
 - Fedora: dnf install libappindicator-gtk3
+
+The Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
+  
 
 ## Installation
 Download the release package and copy itś contents to /opt/pyNotify. 
