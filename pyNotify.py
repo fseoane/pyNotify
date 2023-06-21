@@ -31,7 +31,7 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		base_url=conf_gotify_url,
 		client_token=conf_client_token,
 	)
-	playsound(conf_notification_sound)
+	tray_icon.notify(message="....is ready",title="pyNotify...")
 	async for msg in async_gotify.stream():
 		playsound(conf_notification_sound)
 		tray_icon.notify(message=msg["message"],title=msg["title"])
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 		
 		# Run the icon mainloop in first thread
 		threading.Thread(target=tray_icon.run).start()
-  
+		
 		# Run the gotify listener asynchronously in a second thread
 		with asyncio.Runner() as runner:
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon))
