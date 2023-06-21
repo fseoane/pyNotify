@@ -37,6 +37,7 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		base_url=conf_gotify_url,
 		client_token=conf_client_token,
 	)
+	print("...listening")
 	if (tray_icon.HAS_NOTIFICATION):
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
   
@@ -118,6 +119,7 @@ if __name__ == "__main__":
 		
 		# Run the gotify listener asynchronously in a second thread
 		with asyncio.Runner() as runner:
+			print("...starting loop")
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon))
 	finally:
 		sys.exit(0) 
