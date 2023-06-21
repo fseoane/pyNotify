@@ -1,4 +1,4 @@
-sudo -S pacman -S libappindicator-gtk3
+sudo apt install gir1.2-appindicator3-0.1
 
 mkdir .env 
 python3 -m venv .env
