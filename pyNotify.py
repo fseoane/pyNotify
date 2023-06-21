@@ -31,9 +31,11 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		base_url=conf_gotify_url,
 		client_token=conf_client_token,
 	)
+	playsound(conf_notification_sound)
 	async for msg in async_gotify.stream():
 		playsound(conf_notification_sound)
 		tray_icon.notify(message=msg["message"],title=msg["title"])
+		#subprocess.run(["notify-send", "-u", "normal", "-i", conf_notification_icon, "-t", "3000",msg["title"], msg["message"]],check=True)
 
 
 def tray_icon_on_clicked(tray_icon, item):
