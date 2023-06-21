@@ -10,6 +10,7 @@ python -m pip install playsound
 python -m pip install pyinstaller
 python -m pip install pycairo
 python -m pip install pygobject
+python -m pip install asyncio
 python -m pip install pystray
 python -m pip install pillow
 python -m pip install websockets

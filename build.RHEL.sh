@@ -16,6 +16,7 @@ python -m pip install --upgrade pygobject
 python -m pip install --upgrade pystray
 python -m pip install --upgrade pillow
 python -m pip install --upgrade websockets
+python -m pip install --upgrade asyncio
 python -m pip install --upgrade psutil
 
 pyinstaller --onefile --windowed pyNotify.py
