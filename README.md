@@ -4,8 +4,6 @@ A gnome (wayland) notifier for Gotify server.
 Gotify server is open source software for notifications that can be deployed on-prem (self-hosted). 
 It provides web based service, API,  and also mobile application, but I was missing a working gnome tray notification app for receiving those notifications directly in my gnome desktop (wayland), so I build this.
 
-NOTE: "Exit" from system tray icon menu is not working (still under investigation)
-
 ## Installation
 Download the release package and copy itś contents to /opt/pyNotify. 
 This release package has a binary already compiled and ready to execute on Linux.
