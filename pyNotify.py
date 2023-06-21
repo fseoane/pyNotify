@@ -115,8 +115,9 @@ if __name__ == "__main__":
 		)
 		
 		# Run the icon mainloop in first thread
-		threading.Thread(target=tray_icon.run_detached).start()
-		
+		threading.Thread(target=tray_icon.run).start()
+		print("...placed tray icon")
+
 		# Run the gotify listener asynchronously in a second thread
 		with asyncio.Runner() as runner:
 			print("...starting loop")

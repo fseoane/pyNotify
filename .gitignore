@@ -5,3 +5,4 @@ build/*
 .pyNotify.conf
 pyNotify.spec
 test.py
+*.log
