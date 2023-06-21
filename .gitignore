@@ -1,3 +1,4 @@
+.gitignore
 _*_
 dist/*
 .env/*
