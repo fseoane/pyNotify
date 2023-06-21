@@ -1,8 +1,8 @@
 sudo dnf install --assumeyes libappindicator-gtk3
-sudo dnf install --assumeyes pkg-config python3.11-devel python3-devel
-sudo dnf install --assumeyes gobject-introspection-devel 
-sudo dnf install --assumeyes python3-cairo python3-cairo-devel cairo-devel cairo-gobject-devel 
-sudo dnf install --assumeyes python3-websockets python3-aiohttp python3-pillow 
+sudo dnf install --assumeyes pkg-config python3.11-devel # python3-devel
+# sudo dnf install --assumeyes gobject-introspection-devel 
+# sudo dnf install --assumeyes python3-cairo python3-cairo-devel cairo-devel cairo-gobject-devel 
+# sudo dnf install --assumeyes python3-websockets python3-aiohttp python3-pillow 
 
 mkdir -p .env 
 python3.11  -m venv .env
