@@ -10,13 +10,16 @@ Built on Python 3.11
 It also requires Ayatana AppIndicator3 and Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support".
 
 To install support for Ayatana AppIndicator3 library:
-- Arch  (OK - TESTED):
+
+- Arch :
       sudo pacman -S libappindicator-gtk3
-- Debian12 (NOT TESTED):
-      sudo apt install gir1.2-appindicator3-0.1
+  
+- Debian 12 :
+      sudo apt install libappindicator3-dev
       sudo apt install libcairo2-dev libjpeg-dev libgif-dev
       sudo apt install libgirepository1.0-dev
-- RedHat9/Fedora (OK -TESTED):
+
+- RedHat 9/Fedora :
       sudo dnf install libappindicator-gtk3
       sudo dnf install pkg-config python3.11-devel
 
