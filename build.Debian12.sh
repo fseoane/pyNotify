@@ -1,7 +1,7 @@
 sudo apt install gir1.2-appindicator3-0.1
 sudo apt install libcairo2-dev libjpeg-dev libgif-dev
-
-mkdir .env 
+sudo apt install libgitrepository1.0-dev
+mkdir -p .env 
 python3 -m venv .env
 source .env/bin/activate
 
