@@ -12,7 +12,7 @@ It also requires Ayatana AppIndicator3 and Gnome-desktop extension "AppIndicator
 To install support for Ayatana AppIndicator3 library:
 - Arch  (OK - TESTED): sudo pacman -S libappindicator-gtk3
 - Debian (NOT TESTED): sudo apt install gir1.2-appindicator3-0.1
-- Fedora (NOT TESTED): dnf install libappindicator-gtk3
+- Fedora (NOT TESTED): sudo dnf install libappindicator-gtk3
 
 The Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
   
