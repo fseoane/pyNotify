@@ -10,6 +10,7 @@ It requires AppIndicator3.
 To install this library:
 - Arch  : sudo pacman -S libappindicator-gtk3
 - Debian: sudo apt install gir1.2-appindicator3-0.1
+- Fedora: dnf install libappindicator-gtk3
 
 ## Installation
 Download the release package and copy itś contents to /opt/pyNotify. 
