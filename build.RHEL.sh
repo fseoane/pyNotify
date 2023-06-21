@@ -5,25 +5,25 @@ sudo dnf install --assumeyes cairo-gobject-devel
 sudo dnf install --assumeyes python3-websockets python3-aiohttp
 
 mkdir -p .env 
-python -m venv .env
+python3.11  -m venv .env
 source .env/bin/activate
 
-python -m pip install --upgrade pip setuptools wheel
+python3.11  -m pip install --upgrade pip setuptools wheel
 
-python -m pip install --upgrade gotify
-python -m pip install --upgrade gotify[stream]
-#python -m pip install --use-pep517 playsound
-#python -m pip install --upgrade playsound
-python -m pip install --upgrade pygame
-python -m pip install --upgrade pyinstaller
-#python -m pip install --upgrade pycairo
-#python -m pip install --upgrade pygobject
-python -m pip install --upgrade pystray
-python -m pip install --upgrade pillow
-python -m pip install --upgrade websockets
-python -m pip install --upgrade async
-python -m pip install --upgrade asyncio
-python -m pip install --upgrade psutil
+python3.11  -m pip install --upgrade gotify
+python3.11  -m pip install --upgrade gotify[stream]
+#python3.11  -m pip install --use-pep517 playsound
+#python3.11  -m pip install --upgrade playsound
+python3.11  -m pip install --upgrade pygame
+python3.11  -m pip install --upgrade pyinstaller
+#python3.11  -m pip install --upgrade pycairo
+#python3.11  -m pip install --upgrade pygobject
+python3.11  -m pip install --upgrade pystray
+python3.11  -m pip install --upgrade pillow
+python3.11  -m pip install --upgrade websockets
+python3.11  -m pip install --upgrade async
+python3.11  -m pip install --upgrade asyncio
+python3.11  -m pip install --upgrade psutil
 
 pyinstaller --onefile --windowed pyNotify.py > build.RHEL.pyinstaller.log
 
