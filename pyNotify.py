@@ -11,6 +11,7 @@ from playsound import playsound
 import pystray
 import PIL.Image
 import psutil
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
  
 def checkIfProcessRunning(processName):
