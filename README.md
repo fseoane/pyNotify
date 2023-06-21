@@ -12,9 +12,9 @@ It also requires Ayatana AppIndicator3 and Gnome-desktop extension "AppIndicator
 To install support for Ayatana AppIndicator3 library:
 - Arch  (OK - TESTED):
   sudo pacman -S libappindicator-gtk3
-- Debian (NOT TESTED):
+- Debian12 (NOT TESTED):
   sudo apt install gir1.2-appindicator3-0.1
-- RedHat/Fedora (OK -TESTED):
+- RedHat9/Fedora (OK -TESTED):
   sudo dnf install libappindicator-gtk3
   sudo dnf install pkg-config python3.11-devel
 
