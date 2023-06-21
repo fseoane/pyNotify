@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo apt install virtualenv
 sudo apt install libcairo2-dev libjpeg-dev libgif-dev
 sudo apt install libgirepository1.0-dev
