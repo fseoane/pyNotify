@@ -1,23 +1,23 @@
 sudo -S pacman -S libappindicator-gtk3
 
 mkdir .env 
-python -m venv .env
+python3 -m venv .env
 source .env/bin/activate
 
-python  -m pip install --upgrade pip setuptools wheel
+python3  -m pip install --upgrade pip setuptools wheel
 
-python -m pip install gotify
-python -m pip install gotify[stream]
-#python -m pip install playsound
-python -m pip install pyinstaller
-python -m pip install pycairo
-python -m pip install pygame
-python -m pip install pygobject
-python -m pip install asyncio
-python -m pip install pystray
-python -m pip install pillow
-python -m pip install websockets
-python -m pip install psutil
+python3 -m pip install gotify
+python3 -m pip install gotify[stream]
+#python3 -m pip install playsound
+python3 -m pip install pyinstaller
+python3 -m pip install pycairo
+python3 -m pip install pygame
+python3 -m pip install pygobject
+python3 -m pip install asyncio
+python3 -m pip install pystray
+python3 -m pip install pillow
+python3 -m pip install websockets
+python3 -m pip install psutil
 
 pyinstaller --onefile --windowed pyNotify.py
 
