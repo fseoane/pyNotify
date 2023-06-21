@@ -2,23 +2,24 @@ sudo dnf install --assumeyes libappindicator-gtk3
 sudo dnf install --assumeyes cairo-devel pkg-config python3-devel
 sudo dnf install --assumeyes gobject-introspection-devel 
 sudo dnf install --assumeyes cairo-gobject-devel 
-mkdir .env 
-python3.11 -m venv .env
+mkdir -p .env 
+python -m venv .env
 source .env/bin/activate
 
-python3.11 -m pip install --upgrade gotify
-python3.11 -m pip install --upgrade gotify[stream]
-#python3.11 -m pip install --use-pep517 playsound
-#python3.11 -m pip install --upgrade playsound
-python3.11 -m pip install --upgrade pygame
-python3.11 -m pip install --upgrade pyinstaller
-#python3.11 -m pip install --upgrade pycairo
-#python3.11 -m pip install --upgrade pygobject
-python3.11 -m pip install --upgrade pystray
-python3.11 -m pip install --upgrade pillow
-python3.11 -m pip install --upgrade websockets
-python3.11 -m pip install --upgrade asyncio
-python3.11 -m pip install --upgrade psutil
+python -m pip install --upgrade gotify
+python -m pip install --upgrade gotify[stream]
+#python -m pip install --use-pep517 playsound
+#python -m pip install --upgrade playsound
+python -m pip install --upgrade pygame
+python -m pip install --upgrade pyinstaller
+#python -m pip install --upgrade pycairo
+#python -m pip install --upgrade pygobject
+python -m pip install --upgrade pystray
+python -m pip install --upgrade pillow
+python -m pip install --upgrade websockets
+python -m pip install --upgrade async
+python -m pip install --upgrade asyncio
+python -m pip install --upgrade psutil
 
 pyinstaller --onefile --windowed pyNotify.py
 
@@ -30,4 +31,4 @@ cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf
 
 deactivate
-rm -rf .env
+#rm -rf .env
