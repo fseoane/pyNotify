@@ -16,7 +16,7 @@ To install support for Ayatana AppIndicator3 library:
   sudo apt install gir1.2-appindicator3-0.1
 - Fedora (NOT TESTED):
   sudo dnf install libappindicator-gtk3 cairo-devel pkg-config python3-devel
-  gobject-introspection-devel cairo-gobject-devel 
+  gobject-introspection-devel cairo-gobject-devel python3-websockets python3-aiohttp
 
 The Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
   
