@@ -4,7 +4,6 @@ sudo apt install libgirepository1.0-dev
 
 mkdir -p .env 
 python3.11 -m venv .env
-sleep 10
 source .env/bin/activate
 
 python3.11  -m pip install --upgrade pip setuptools wheel
