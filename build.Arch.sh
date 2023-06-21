@@ -1,4 +1,4 @@
-sudo pacman - S libappindicator-gtk3
+sudo pacman -S libappindicator-gtk3
 
 mkdir .env 
 python -m venv .env
