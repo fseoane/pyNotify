@@ -6,17 +6,17 @@ mkdir .env
 python -m venv .env
 source .env/bin/activate
 
-python -m pip install gotify
-python -m pip install gotify[stream]
+python -m pip install --upgrade gotify
+python -m pip install --upgrade gotify[stream]
 #python -m pip install --use-pep517 playsound
-python -m pip install  playsound
-python -m pip install pyinstaller
-python -m pip install pycairo
-python -m pip install pygobject
-python -m pip install pystray
-python -m pip install pillow
-python -m pip install websockets
-python -m pip install psutil
+python -m pip install --upgrade playsound
+python -m pip install --upgrade pyinstaller
+python -m pip install --upgrade pycairo
+python -m pip install --upgrade pygobject
+python -m pip install --upgrade pystray
+python -m pip install --upgrade pillow
+python -m pip install --upgrade websockets
+python -m pip install --upgrade psutil
 
 pyinstaller --onefile --windowed pyNotify.py
 
