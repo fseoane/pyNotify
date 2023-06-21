@@ -1,4 +1,4 @@
-sudo apt install gir1.2-appindicator3-0.1
+sudo apt install virtualenv
 sudo apt install libcairo2-dev libjpeg-dev libgif-dev
 sudo apt install libgirepository1.0-dev
 
