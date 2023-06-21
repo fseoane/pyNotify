@@ -2,7 +2,7 @@ sudo dnf install --assumeyes libappindicator-gtk3
 sudo dnf install --assumeyes cairo-devel pkg-config python3-devel
 sudo dnf install --assumeyes gobject-introspection-devel 
 sudo dnf install --assumeyes cairo-gobject-devel 
-sudo dnf install --assumeyes python3-websockets python3-aiohttp
+sudo dnf install --assumeyes python3-websockets python3-aiohttp python3-pillow
 
 mkdir -p .env 
 python3.11  -m venv .env
@@ -25,7 +25,7 @@ python3.11  -m pip install --upgrade async
 python3.11  -m pip install --upgrade asyncio
 python3.11  -m pip install --upgrade psutil
 
-pyinstaller --onefile --windowed pyNotify.py > build.RHEL.pyinstaller.log
+pyinstaller --onefile --windowed pyNotify.py
 
 cp notification.ogg dist
 cp notification.svg dist
@@ -35,4 +35,4 @@ cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf
 
 deactivate
-#rm -rf .env
+rm -rf .env
