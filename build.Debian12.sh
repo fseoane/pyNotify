@@ -1,8 +1,10 @@
 sudo apt install gir1.2-appindicator3-0.1
 sudo apt install libcairo2-dev libjpeg-dev libgif-dev
 sudo apt install libgitrepository1.0-dev
+
 mkdir -p .env 
-python3 -m venv .env
+python -m venv .env
+sleep 5
 source .env/bin/activate
 
 python3  -m pip install --upgrade pip setuptools wheel
