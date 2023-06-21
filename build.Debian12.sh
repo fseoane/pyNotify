@@ -2,10 +2,10 @@ sudo apt install gir1.2-appindicator3-0.1
 sudo apt install libcairo2-dev libjpeg-dev libgif-dev
 sudo apt install libgirepository1.0-dev
 
-mkdir -p .env 
-python3 -m venv .env
-sleep 10
-source .env/bin/activate
+# mkdir -p .env 
+# python3 -m venv .env
+# sleep 10
+# source .env/bin/activate
 
 python3  -m pip install --upgrade pip setuptools wheel
 
@@ -31,5 +31,5 @@ cp pyNotify.desktop dist
 cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf
 
-deactivate
-rm -rf .env
+# deactivate
+# rm -rf .env
