@@ -3,7 +3,9 @@
 sudo apt install virtualenv
 sudo apt install libcairo2-dev libjpeg-dev libgif-dev
 sudo apt install libgirepository1.0-dev
-sudo apt install libayatana-appindicator3-1
+sudo apt install libappindicator3-dev
+
+#sudo apt install libayatana-appindicator3-1
 
 # mkdir -p .env 
 # python3.11 -m venv .env
