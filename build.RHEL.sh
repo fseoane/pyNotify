@@ -2,9 +2,13 @@ sudo dnf install --assumeyes libappindicator-gtk3
 sudo dnf install --assumeyes cairo-devel pkg-config python3-devel
 sudo dnf install --assumeyes gobject-introspection-devel 
 sudo dnf install --assumeyes cairo-gobject-devel 
+sudo dnf install --assumeyes python3-websockets python3-aiohttp
+
 mkdir -p .env 
 python -m venv .env
 source .env/bin/activate
+
+python -m pip install --upgrade pip setuptools wheel
 
 python -m pip install --upgrade gotify
 python -m pip install --upgrade gotify[stream]
@@ -21,7 +25,7 @@ python -m pip install --upgrade async
 python -m pip install --upgrade asyncio
 python -m pip install --upgrade psutil
 
-pyinstaller --onefile --windowed pyNotify.py
+pyinstaller --onefile --windowed pyNotify.py > build.RHEL.pyinstaller.log
 
 cp notification.ogg dist
 cp notification.svg dist
