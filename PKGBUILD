@@ -48,7 +48,7 @@ build() {
 
 	sudo -S pacman -S libappindicator-gtk3
 
-	python  -m pip install --upgrade pip setuptools wheel
+	python  -m pip install --upgrade pip # setuptools wheel
 
 	python -m pip uninstall gotify
 	python -m pip uninstall gotify[stream]
@@ -62,7 +62,7 @@ build() {
 	python -m pip uninstall websockets
 	python -m pip uninstall psutil
 
-	python -m pip install gotify
+	#python -m pip install gotify
 	python -m pip install gotify[stream]
 	python -m pip install pyinstaller
 	python -m pip install pycairo
@@ -71,7 +71,7 @@ build() {
 	python -m pip install asyncio
 	python -m pip install pystray
 	python -m pip install pillow
-	python -m pip install websockets
+	#python -m pip install websockets
 	python -m pip install psutil
 
 	pyinstaller --onefile --windowed pyNotify.py
