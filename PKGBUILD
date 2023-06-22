@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=4.0
+pkgver=4.0.r196.934fba3
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
