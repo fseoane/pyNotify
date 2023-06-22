@@ -108,13 +108,6 @@ if __name__ == "__main__":
 			)
 			sys.exit(1) 
 		conf_notification_icon=config['config']['notification_icon_name']
-		if checkIfFileExists(conf_notification_icon):
-			osNotify(
-				"pyNotify ERROR",
-				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_notification_icon,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),
-				"error"
-			)
-			sys.exit(1) 
 
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
 
