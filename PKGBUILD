@@ -5,13 +5,13 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4.r138.c9806d3
+pkgver=0.4
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
 arch=(x86_64 i686)
 url="https://github.com/fseoane/pyNotify.git"
-license=('GPL')
+license=('MIT')
 groups=()
 depends=(libappindicator-gtk3 gnome-shell-extension-appindicator)
 makedepends=(git python3 python-pip python-virtualenv)
@@ -50,14 +50,18 @@ build() {
 # }
 
 package() {
-	cd "$pkgname/$pkgver"
+	cd "$pkgname"
 	killall $pkgname   # to allow the copy of new file sin case itś already runing
 	mkdir -p ${pkgdir}/opt/${pkgname}
-	cp ${pkgname}/${pkgver}/dist/${pkgname} ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/${pkgname}.desktop ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/*.ogg ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/*.png ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/*.svg ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}/src/${pkgname}/dist/${pkgname} ${pkgdir}/opt/${pkgname}/${pkgname}
+	cp ${pkgname}/src/${pkgname}/${pkgname}.desktop ${pkgdir}/opt/${pkgname}/${pkgname}.desktop
+	cp ${pkgname}/src/${pkgname}/*.ogg ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}/src/${pkgname}/*.png ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}/src/${pkgname}/*.svg ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}/src/${pkgname}/*.conf ${pkgdir}/opt/${pkgname}/${pkgname}.conf.default
+	chmod -R 755 ${pkgdir}/opt/${pkgname}
+	chown -R root:users ${pkgdir}/opt/${pkgname}
+	desktop-file-install --dir=$HOME/.local/share/applications ${pkgdir}/opt/${pkgname}/${pkgname}.desktop
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 
