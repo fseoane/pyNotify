@@ -30,15 +30,15 @@ def checkIfProcessRunning(processName):
 
 	return False
 
-def osNotify(title,message,notif_icon):
-    subprocess.run(["notify-send", "-u", "normal", "-i", notif_icon, "-t", "3000",title, message],check=True)
+def osNotify(title,message):
+    subprocess.run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",title, message],check=True)
 
 def play_ogg(file_path):
     pygame.mixer.init()
     pygame.mixer.music.load(file_path)
     pygame.mixer.music.play()
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon):
+async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global EXIT_REQUESTED
 	async_gotify = AsyncGotify(
 		base_url=conf_gotify_url,
@@ -54,8 +54,8 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		if (tray_icon.HAS_NOTIFICATION):
 			tray_icon.notify(message=msg["message"],title=msg["title"])
 		else:
-			#subprocess.run(["notify-send", "-u", "normal", "-i", conf_notification_icon, "-t", "3000",msg["title"], msg["message"]],check=True)
-			osNotify(msg["title"],msg["message"],conf_notification_icon)
+			#subprocess.run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",msg["title"], msg["message"]],check=True)
+			osNotify(msg["title"],msg["message"],"notification")
 
 
 def tray_icon_on_clicked(tray_icon, item):
@@ -80,8 +80,7 @@ if __name__ == "__main__":
 	if checkIfProcessRunning(processName):
 		osNotify(
       		"pyNotify ERROR",
-			"{} process already exists. {} seems to be running. Exiting".format(processName,processName),
-   			"error"
+			"{} process already exists. {} seems to be running. Exiting".format(processName,processName)
       	)
 		sys.exit(1) 
 
@@ -95,19 +94,17 @@ if __name__ == "__main__":
 		if checkIfFileExists(conf_tray_icon):
 			osNotify(
 				"pyNotify ERROR",
-				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),
-				"error"
+				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
 			sys.exit(1) 
 		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
 		if checkIfFileExists(conf_notification_sound):
 			osNotify(
 				"pyNotify ERROR",
-				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),
-				"error"
+				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
 			sys.exit(1) 
-		conf_notification_icon=config['config']['notification_icon_name']
+	
 
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
 
@@ -136,6 +133,6 @@ if __name__ == "__main__":
 		# Run the gotify listener asynchronously in a second thread
 		with asyncio.Runner() as runner:
 			print("...starting loop")
-			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,conf_notification_icon))
+			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 	finally:
 		sys.exit(0) 
