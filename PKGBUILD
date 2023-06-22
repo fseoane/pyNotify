@@ -118,6 +118,5 @@ package() {
 	sudo install -Dm644 LICENSE "/usr/share/licenses/${pkgname}/LICENSE"
     sudo install -Dm644 README.md "/usr/share/doc/${pkgname}/README.md"
 
-	rm -rf 
 
 }
