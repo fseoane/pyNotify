@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4
+pkgver=0.4.r172.319e11d
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -61,6 +61,8 @@ build() {
 	python -m pip uninstall pillow
 	python -m pip uninstall websockets
 	python -m pip uninstall psutil
+
+	python -m pip cache remove * 
 
 	#python -m pip install gotify
 	python -m pip install gotify[stream]
