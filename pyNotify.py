@@ -14,6 +14,10 @@ import psutil
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
  
+def checkIfFileExists(fileFullPathName):
+	# Check if the file specified by fileFullPathName exists(true) or not (false).
+	return os.path.isfile(fileFullPathName)
+
 def checkIfProcessRunning(processName):
 	# Check if there is any running process that contains the given name processName.
 	countProcesses = 0
@@ -25,6 +29,9 @@ def checkIfProcessRunning(processName):
 			return True
 
 	return False
+
+def osNotify(title,message,notif_icon):
+    subprocess.run(["notify-send", "-u", "normal", "-i", notif_icon, "-t", "3000",title, message],check=True)
 
 def play_ogg(file_path):
     pygame.mixer.init()
@@ -47,7 +54,8 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		if (tray_icon.HAS_NOTIFICATION):
 			tray_icon.notify(message=msg["message"],title=msg["title"])
 		else:
-			subprocess.run(["notify-send", "-u", "normal", "-i", conf_notification_icon, "-t", "3000",msg["title"], msg["message"]],check=True)
+			#subprocess.run(["notify-send", "-u", "normal", "-i", conf_notification_icon, "-t", "3000",msg["title"], msg["message"]],check=True)
+			osNotify(msg["title"],msg["message"],conf_notification_icon)
 
 
 def tray_icon_on_clicked(tray_icon, item):
@@ -70,29 +78,43 @@ if __name__ == "__main__":
 	processName = progname[progname.rfind(PATH_SEPARATOR)+1:]
 		
 	if checkIfProcessRunning(processName):
-		subprocess.run(
-			[
-				"notify-send", 
-				"-u", "normal", 
-				"-i", "error", 
-				"-t", "3000",
-				"pyNotify ERROR", 
-				"{} process already exists. {} seems to be running. Exiting".format(processName,processName)
-			],
-			check=True
-		)
+		osNotify(
+      		"pyNotify ERROR",
+			"{} process already exists. {} seems to be running. Exiting".format(processName,processName),
+   			"error"
+      	)
 		sys.exit(1) 
 
 	try:   
 		print ("Loading config from: {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'))
 		config = configparser.ConfigParser()
 		config.read(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
-
 		conf_gotify_url=config['config']['gotify_url']
 		conf_client_token=config['config']['client_token']
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
+		if checkIfFileExists(conf_tray_icon):
+			osNotify(
+				"pyNotify ERROR",
+				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),
+				"error"
+			)
+			sys.exit(1) 
 		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
+		if checkIfFileExists(conf_notification_sound):
+			osNotify(
+				"pyNotify ERROR",
+				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),
+				"error"
+			)
+			sys.exit(1) 
 		conf_notification_icon=config['config']['notification_icon_name']
+		if checkIfFileExists(conf_notification_icon):
+			osNotify(
+				"pyNotify ERROR",
+				"{} file does not exist in path: {}.  Check your config file: {}".format(conf_notification_icon,SCRIPT_PATH+PATH_SEPARATOR,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),
+				"error"
+			)
+			sys.exit(1) 
 
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
 
