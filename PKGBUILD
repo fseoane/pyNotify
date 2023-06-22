@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4.r168.793be76
+pkgver=0.4
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -94,10 +94,7 @@ build() {
 
 package() {
 	cd "$pkgname"
-	#killall $pkgname   # to allow the copy of new file sin case itś already runing
 	sudo mkdir -p /opt/${pkgname}
-	#sudo chown -R root:users /opt/${pkgname}
-
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
@@ -105,15 +102,6 @@ package() {
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.svg /opt/${pkgname}/
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.conf /opt/${pkgname}/${pkgname}.conf.default
 
-
-	# sudo cp ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
-	# sudo cp ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
-	# sudo cp ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
-	# sudo cp ${srcdir}/${pkgname}/*.png /opt/${pkgname}/
-	# sudo cp ${srcdir}/${pkgname}/*.svg /opt/${pkgname}/
-	# sudo cp ${srcdir}/${pkgname}/${pkgname}.conf /opt/${pkgname}/${pkgname}.conf.default
-	# chmod -R 755 /opt/${pkgname}
-	# chown -R root:users /opt/${pkgname}
 	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
 	sudo install -Dm644 LICENSE "/usr/share/licenses/${pkgname}/LICENSE"
     sudo install -Dm644 README.md "/usr/share/doc/${pkgname}/README.md"
