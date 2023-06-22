@@ -53,12 +53,13 @@ package() {
 	cd "$pkgname"
 	killall $pkgname   # to allow the copy of new file sin case itś already runing
 	mkdir -p /opt/${pkgname}
-	cp src/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
-	cp src/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
-	cp src/${pkgname}/*.ogg /opt/${pkgname}/
-	cp src/${pkgname}/*.png /opt/${pkgname}/
-	cp src/${pkgname}/*.svg /opt/${pkgname}/
-	cp src/${pkgname}/*.conf /opt/${pkgname}/${pkgname}.conf.default
+	make PREFIX=/opt DESTDIR="${pkgdir}" install
+	#cp ${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
+	cp ${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
+	cp *.ogg /opt/${pkgname}/
+	cp *.png /opt/${pkgname}/
+	cp *.svg /opt/${pkgname}/
+	cp *.conf /opt/${pkgname}/${pkgname}.conf.default
 	chmod -R 755 ${pkgdir}/opt/${pkgname}
 	chown -R root:users ${pkgdir}/opt/${pkgname}
 	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
