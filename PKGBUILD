@@ -29,6 +29,7 @@ noextract=()
 md5sums=('SKIP')
 validpgpkeys=()
 
+
 pkgver() {
 	cd "${_pkgname}"
 	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
