@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4.r182.023ee05
+pkgver=0.4.r184.c907bc5
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -44,6 +44,8 @@ build() {
 	mkdir .env 
 	python -m venv .env
 	source .env/bin/activate
+
+	sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
 
 	python  -m pip install --upgrade pip # setuptools wheel
 
