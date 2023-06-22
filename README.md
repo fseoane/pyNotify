@@ -63,6 +63,8 @@ Please make sure you install these dependencies (along the previous ones) before
 
       sudo pacman -S python3
   
+      sudo pacman -S python-pip  
+
       sudo pacman -S python-virtualenv
   
 - Debian 12 :
