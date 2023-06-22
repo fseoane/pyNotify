@@ -1,11 +1,12 @@
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
-pkgname=pyNotify
+pkgname=pynotify-git
+pkgbase=pynotify-git
 pkgver=4.0
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
 arch=('x86_64')
-url="https://github.com/fseoane/pyNotify.git"
+url="https://github.com/fseoane/pynotify-git.git"
 license=('MIT')
 groups=()
 depends=('libappindicator-gtk3' 'gnome-shell-extension-appindicator')
@@ -24,28 +25,26 @@ noextract=()
 md5sums=('SKIP')
 validpgpkeys=()
 
+mypackagename=pyNotify
 
 pkgver() {
-	cd "${_pkgname}"
+	cd "${_pkgbase}"
 	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-	cd "$pkgname"
-	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)" > pyNotify.ver
 }
 
-# prepare() {
-# 	cd "$pkgname"
-# 	echo "$pkgver" > pyNotify.ver
-# }
+prepare() {
+	cd "$pkgbase"
+ 	echo "$pkgver" > pyNotify.ver
+}
 
 build() {
-	sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
-	sudo pacman -S --needed git python3 python-pip python-virtualenv
+	#sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
+	#sudo pacman -S --needed git python3 python-pip python-virtualenv
 	
-	cd "$pkgname"
+	cd "$pkgbase"
 	mkdir .env 
 	python -m venv .env
 	source .env/bin/activate
-
 	
 	python  -m pip install --upgrade pip # setuptools wheel
 
@@ -66,35 +65,29 @@ build() {
 	rm -rf .env
 }
 
-# check() {
-# 	cd "$pkgname-$pkgver"
-# 	make -k check
-# }
 
 package() {
-	cd "$pkgname"
+	cd "$pkgbase"
 
-	sudo rm /opt/${pkgname}/${pkgname}
-	sudo rm /opt/${pkgname}/${pkgname}.desktop
-	sudo rm /opt/${pkgname}/${pkgname}.conf.default
-	sudo rm /opt/${pkgname}/${pkgname}.ver
-	sudo rm /opt/${pkgname}/*.ogg
-	sudo rm /opt/${pkgname}/*.png
-	sudo rm /opt/${pkgname}/*.svg
+#	sudo rm /opt/${mypackagename}/${mypackagename}
+#	sudo rm /opt/${mypackagename}/${mypackagename}.desktop
+#	sudo rm /opt/${mypackagename}/${mypackagename}.conf.sample
+#	sudo rm /opt/${mypackagename}/${mypackagename}.ver
+#	sudo rm /opt/${mypackagename}/*.ogg
+#	sudo rm /opt/${mypackagename}/*.png
+#	sudo rm /opt/${mypackagename}/*.svg
 
-	sudo mkdir -p /opt/${pkgname}
+	sudo mkdir -p /opt/${mypackagename}
 	
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.png /opt/${pkgname}/
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.svg /opt/${pkgname}/
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.ver /opt/${pkgname}/${pkgname}.ver
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.conf /opt/${pkgname}/${pkgname}.conf.default
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/dist/${mypackagename} /opt/${mypackagename}/${mypackagename}
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/${mypackagename}.desktop /opt/${mypackagename}/${mypackagename}.desktop
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/*.ogg /opt/${mypackagename}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/*.png /opt/${mypackagename}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/*.svg /opt/${mypackagename}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/${mypackagename}.ver /opt/${mypackagename}/${mypackagename}.ver
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgbase}/${mypackagename}.conf /opt/${mypackagename}/${mypackagename}.conf.sample
 
-	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
-	sudo install -Dm644 LICENSE "/usr/share/licenses/${pkgname}/LICENSE"
-    sudo install -Dm644 README.md "/usr/share/doc/${pkgname}/README.md"
-
-
+	desktop-file-install --dir=$HOME/.local/share/applications /opt/${mypackagename}/${mypackagename}.desktop
+	sudo install -Dm644 LICENSE "/usr/share/licenses/${pkgbase}/LICENSE"
+    	sudo install -Dm644 README.md "/usr/share/doc/${pkgbase}/README.md"
 }
