@@ -47,20 +47,27 @@ I'm providing several bash scripts to build / compile with pyinstaller the pytho
 Please make sure you install these dependencies (along the previous ones) before building on your own (not using the build.XXX.sh provided)
 - Any one/other
       python3.11
+  
       python3.11 virtual environments (venv module)
+  
       python3.11 pip
 
 - Arch :
       sudo pacman -S python3
+  
       sudo pacman -S python-virtualenv
   
 - Debian 12 :
       sudo apt install python3.11-venv
+  
       sudo apt install python3-pip
+  
       sudo apt install virtualenv
 
 - RedHat 9/Fedora :
       sudo dnf install python3.11-* (all packages) or just...
+  
       sudo dnf install python3.11-venv
+  
       sudo dnf install python3.11-pip
 
