@@ -93,7 +93,7 @@ if __name__ == "__main__":
 		conf_client_token=config['config']['client_token']
   
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
-		if checkIfFileExists(conf_tray_icon):
+		if not checkIfFileExists(conf_tray_icon):
 			osNotify(
 				"pyNotify ERROR",
 				"{} file does not exist.\nCheck your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
@@ -101,7 +101,7 @@ if __name__ == "__main__":
 			sys.exit(1) 
    
 		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
-		if checkIfFileExists(conf_notification_sound):
+		if not checkIfFileExists(conf_notification_sound):
 			osNotify(
 				"pyNotify ERROR",
 				"{} file does not exist.\nCheck your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
