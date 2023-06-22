@@ -7,13 +7,12 @@ sudo cp pyNotify.desktop /opt/pyNotify/
 sudo cp notification.* /opt/pyNotify/
 
 read -r -p "Install default configuration file (pyNotify.conf)? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
-then
-        sudo cp pyNotify.conf /opt/pyNotify/
-		echo "ATENTION:"
-		echo "Please configure file /opt/pyNotify/pyNotify.conf with your proper values"
+if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+	sudo cp pyNotify.conf /opt/pyNotify/
+	echo "ATENTION:"
+	echo "Please configure file /opt/pyNotify/pyNotify.conf with your proper values"
 else
-		echo "Skipped"
+	echo "Skipped"
 fi
 
 sudo chmod -R 755 /opt/pyNotify
