@@ -1,15 +1,16 @@
 #!/bin/bash
 
-sudo apt install python3.11-venv
+sudo apt install python3.11-venv -y
+sudo apt install python3-pip -y
 
 mkdir -p .env 
 python3.11 -m venv .env
 source .env/bin/activate
 
-sudo apt install virtualenv
-sudo apt install libcairo2-dev libjpeg-dev libgif-dev
-sudo apt install libgirepository1.0-dev
-sudo apt install libappindicator3-dev
+sudo apt install virtualenv -y
+sudo apt install libcairo2-dev libjpeg-dev libgif-dev -y
+sudo apt install libgirepository1.0-dev -y
+sudo apt install libappindicator3-dev -y
 
 python3.11  -m pip install --upgrade pip setuptools wheel
 
