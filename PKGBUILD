@@ -53,14 +53,14 @@ package() {
 	cd "$pkgname"
 	killall $pkgname   # to allow the copy of new file sin case itś already runing
 	mkdir -p /opt/${pkgname}
-	sudo cp dist/${pkgname} /opt/${pkgname}/${pkgname}
-	sudo cp ${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
-	sudo cp *.ogg /opt/${pkgname}/
-	sudo cp *.png /opt/${pkgname}/
-	sudo cp *.svg /opt/${pkgname}/
-	sudo cp *.conf /opt/${pkgname}/${pkgname}.conf.default
-	chmod -R 755 ${pkgdir}/opt/${pkgname}
-	chown -R root:users ${pkgdir}/opt/${pkgname}
+	sudo cp ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
+	sudo cp ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
+	sudo cp ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
+	sudo cp ${srcdir}/${pkgname}/*.png /opt/${pkgname}/
+	sudo cp ${srcdir}/${pkgname}/*.svg /opt/${pkgname}/
+	sudo cp ${srcdir}/${pkgname}/${pkgname}.conf /opt/${pkgname}/${pkgname}.conf.default
+	chmod -R 755 /opt/${pkgname}
+	chown -R root:users /opt/${pkgname}
 	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
