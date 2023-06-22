@@ -35,29 +35,29 @@ pkgver() {
 }
 
 # prepare() {
-# 	cd "$pkgname/$pkgver"
+# 	cd "$pkgname-$pkgver"
 # 	patch -p1 -i "$srcdir/pyNotify/$pkgver.patch"
 # }
 
 build() {
-	cd "$pkgname/$pkgver"
+	cd "$pkgname-$pkgver"
 	sh build.Arch.sh
 }
 
 # check() {
-# 	cd "$pkgname/$pkgver"
+# 	cd "$pkgname-$pkgver"
 # 	make -k check
 # }
 
 package() {
-	cd "$pkgname"
+	cd "$pkgname-$pkgver"
 	killall $pkgname   # to allow the copy of new file sin case itś already runing
 	mkdir -p ${pkgdir}/opt/${pkgname}
-	cp ${pkgname}/${pkgver}/dist/${pkgname} ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/${pkgname}.desktop ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/*.ogg ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/*.png ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/${pkgver}/*.svg ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}-${pkgver}/dist/${pkgname} ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}-${pkgver}/${pkgname}.desktop ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}-${pkgver}/*.ogg ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}-${pkgver}/*.png ${pkgdir}/opt/${pkgname}/
+	cp ${pkgname}-${pkgver}/*.svg ${pkgdir}/opt/${pkgname}/
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 
