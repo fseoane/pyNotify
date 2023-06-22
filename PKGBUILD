@@ -72,7 +72,7 @@ package() {
 	# chmod -R 755 /opt/${pkgname}
 	# chown -R root:users /opt/${pkgname}
 	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
-	install -Dm644 LICENSE "/usr/share/licenses/${pkgname}/LICENSE"
-    install -Dm644 README.md "/usr/share/doc/${pkgname}/README.md"
+	sudo install -Dm644 LICENSE "/usr/share/licenses/${pkgname}/LICENSE"
+    sudo install -Dm644 README.md "/usr/share/doc/${pkgname}/README.md"
 
 }
