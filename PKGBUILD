@@ -95,7 +95,7 @@ build() {
 package() {
 	cd "$pkgname"
 	#killall $pkgname   # to allow the copy of new file sin case itś already runing
-	mkdir -p /opt/${pkgname}
+	sudo mkdir -p /opt/${pkgname}
 	#sudo chown -R root:users /opt/${pkgname}
 
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
