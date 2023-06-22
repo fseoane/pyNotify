@@ -41,7 +41,9 @@ prepare() {
 
 build() {
 	#sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
-	sudo pacman -S --needed $depends $makedepends
+	sudo pacman -S --needed $depends
+	sudo pacman -S --needed $makedepends
+
 	
 	cd "$pkgname"
 	mkdir .env 
