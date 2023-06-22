@@ -12,16 +12,22 @@ It also requires Ayatana AppIndicator3 and Gnome shell extension "AppIndicator a
 To install support for Ayatana AppIndicator3 library:
 
 - Arch :
-      sudo pacman -S libappindicator-gtk3
+
+        sudo pacman -S libappindicator-gtk3
   
 - Debian 12 :
-      sudo apt install libappindicator3-dev
-      sudo apt install libcairo2-dev libjpeg-dev libgif-dev
-      sudo apt install libgirepository1.0-dev
+
+        sudo apt install libappindicator3-dev
+
+        sudo apt install libcairo2-dev libjpeg-dev libgif-dev
+
+        sudo apt install libgirepository1.0-dev
  
 - RedHat 9/Fedora :
-      sudo dnf install libappindicator-gtk3
-      sudo dnf install pkg-config python3.11-devel
+
+        sudo dnf install libappindicator-gtk3
+
+        sudo dnf install pkg-config python3.11-devel
 
 The Gnome shell extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
 
@@ -46,21 +52,34 @@ I'm providing several bash scripts to build / compile with pyinstaller the pytho
 ### 2.1.Dependencies for building / compiling
 Please make sure you install these dependencies (along the previous ones) before building on your own (not using the build.XXX.sh provided)
 - Any one/other
+
       python3.11
+  
       python3.11 virtual environments (venv module)
+  
       python3.11 pip
 
 - Arch :
+
       sudo pacman -S python3
+  
+      sudo pacman -S python-pip  
+
       sudo pacman -S python-virtualenv
   
 - Debian 12 :
+
       sudo apt install python3.11-venv
+  
       sudo apt install python3-pip
+  
       sudo apt install virtualenv
 
 - RedHat 9/Fedora :
-      sudo dnf install python3.11-* (all packages) or just...
+
+      sudo dnf install python3.11-* # (all packages) or just...
+  
       sudo dnf install python3.11-venv
+  
       sudo dnf install python3.11-pip
 
