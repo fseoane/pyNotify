@@ -1,9 +1,9 @@
-sudo dnf install --assumeyes libappindicator-gtk3
-sudo dnf install --assumeyes pkg-config python3.11-devel
-
 mkdir -p .env 
 python3.11  -m venv .env
 source .env/bin/activate
+
+sudo dnf install --assumeyes libappindicator-gtk3
+sudo dnf install --assumeyes pkg-config python3.11-devel
 
 python3.11  -m pip install --upgrade pip setuptools wheel
 
