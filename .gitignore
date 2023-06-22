@@ -5,6 +5,7 @@ _*_
 .pyNotify.conf
 *pyNotify.spec
 *.log
-*hooks/*
-*info/*
-*objects/*
+*/*/pyNotify/*
+*0.4/pyNotify/info/*
+*0.4/pyNotify/objects/*
+*0.4/pyNotify/objects/*

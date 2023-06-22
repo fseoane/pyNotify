@@ -31,7 +31,7 @@ validpgpkeys=()
 
 pkgver() {
 	cd "${_pkgname}"
-	printf "$pkgver.r%2.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	printf "$pkgver.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 # prepare() {
