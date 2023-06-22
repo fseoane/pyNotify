@@ -55,12 +55,12 @@ package() {
 	mkdir -p /opt/${pkgname}
 	#sudo chown -R root:users /opt/${pkgname}
 
-	install -Dm644 ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
-	install -Dm644 ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
-	install -Dm644 ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
-	install -Dm644 ${srcdir}/${pkgname}/*.png /opt/${pkgname}/
-	install -Dm644 ${srcdir}/${pkgname}/*.svg /opt/${pkgname}/
-	install -Dm644 ${srcdir}/${pkgname}/${pkgname}.conf /opt/${pkgname}/${pkgname}.conf.default
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.png /opt/${pkgname}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.svg /opt/${pkgname}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.conf /opt/${pkgname}/${pkgname}.conf.default
 
 
 	# sudo cp ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
