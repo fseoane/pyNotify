@@ -8,6 +8,18 @@ sudo -S pacman -S libappindicator-gtk3
 
 python  -m pip install --upgrade pip setuptools wheel
 
+python -m pip uninstall gotify
+python -m pip uninstall gotify[stream]
+python -m pip uninstall pyinstaller
+python -m pip uninstall pycairo
+python -m pip uninstall pygame
+python -m pip uninstall pygobject
+python -m pip uninstall asyncio
+python -m pip uninstall pystray
+python -m pip uninstall pillow
+python -m pip uninstall websockets
+python -m pip uninstall psutil
+
 python -m pip install gotify
 python -m pip install gotify[stream]
 python -m pip install pyinstaller
