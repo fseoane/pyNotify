@@ -24,9 +24,8 @@ To install support for Ayatana AppIndicator3 library:
       sudo dnf install pkg-config python3.11-devel
 
 The Gnome shell extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
-  
 
-## Installation
+### Installing the release package (precompiled)
 Download the release package and copy itś contents to /opt/pyNotify. 
 This release package has a binary already compiled and ready to execute on Linux.
 The bash script (install.sh) inside the realease package will copy all the necessary files to /opt/pyNotify in one go.....
@@ -43,7 +42,7 @@ I'm providing several bash scripts to build / compile with pyinstaller the pytho
 - build.and.install.sh: combination of both
 - install.binaries.sh: do not use this....itś meant to be copied into the dist folder to install the resulting compiled files to /opt/pyNotify
 
-### Dependencies of building / compiling
+### Dependencies for building / compiling
 Please make sure you install these dependencies (along the previous ones) before building on your own (not using the build.XXX.sh provided)
 - Any one/other
       python3.11
