@@ -10,7 +10,6 @@ python  -m pip install --upgrade pip setuptools wheel
 
 python -m pip install gotify
 python -m pip install gotify[stream]
-#python -m pip install playsound
 python -m pip install pyinstaller
 python -m pip install pycairo
 python -m pip install pygame
