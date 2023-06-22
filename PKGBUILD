@@ -51,7 +51,7 @@ build() {
 
 package() {
 	cd "$pkgname"
-	killall $pkgname   # to allow the copy of new file sin case itś already runing
+	#killall $pkgname   # to allow the copy of new file sin case itś already runing
 	mkdir -p /opt/${pkgname}
 	sudo cp ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
 	sudo cp ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
