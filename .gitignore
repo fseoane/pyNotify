@@ -8,4 +8,5 @@ _*_
 */*/pyNotify/*
 *0.4/pyNotify/info/*
 *0.4/pyNotify/objects/*
-*0.4/pyNotify/objects/*
+*0.4/pyNotify/src/*
+*0.4/pyNotify/hooks/*
