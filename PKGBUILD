@@ -53,8 +53,7 @@ package() {
 	cd "$pkgname"
 	killall $pkgname   # to allow the copy of new file sin case itś already runing
 	mkdir -p /opt/${pkgname}
-	make PREFIX=/opt DESTDIR="${pkgdir}" install
-	#cp ${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
+	sudo cp dist/${pkgname} /opt/${pkgname}/${pkgname}
 	sudo cp ${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
 	sudo cp *.ogg /opt/${pkgname}/
 	sudo cp *.png /opt/${pkgname}/
