@@ -7,7 +7,6 @@ import threading
 from gotify import AsyncGotify  
 import subprocess
 import json
-#from playsound import playsound
 import pystray
 import PIL.Image
 import psutil

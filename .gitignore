@@ -6,6 +6,7 @@ _*_
 *pyNotify.spec
 *.log
 */*/pyNotify/*
+*0.4/pyNotify/*
 *0.4/pyNotify/info/*
 *0.4/pyNotify/objects/*
 *0.4/pyNotify/src/*
