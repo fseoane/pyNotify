@@ -13,8 +13,8 @@ arch=('x86_64')
 url="https://github.com/fseoane/pyNotify.git"
 license=('MIT')
 groups=()
-depends=("libappindicator-gtk3" "gnome-shell-extension-appindicator")
-makedepends=("git" "python3" "python-pip" "python-virtualenv")
+depends=(libappindicator-gtk3 gnome-shell-extension-appindicator)
+makedepends=(git python3 python-pip python-virtualenv)
 checkdepends=()
 optdepends=()
 provides=(pyNotify)
@@ -40,13 +40,15 @@ prepare() {
 }
 
 build() {
+	#sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
+	sudo pacman -S --needed $depends $makedepends
+	
 	cd "$pkgname"
 	mkdir .env 
 	python -m venv .env
 	source .env/bin/activate
 
-	sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
-
+	
 	python  -m pip install --upgrade pip # setuptools wheel
 
 	python -m pip cache purge
