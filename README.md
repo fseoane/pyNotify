@@ -18,7 +18,7 @@ To install support for Ayatana AppIndicator3 library:
       sudo apt install libappindicator3-dev
       sudo apt install libcairo2-dev libjpeg-dev libgif-dev
       sudo apt install libgirepository1.0-dev
-
+ 
 - RedHat 9/Fedora :
       sudo dnf install libappindicator-gtk3
       sudo dnf install pkg-config python3.11-devel
