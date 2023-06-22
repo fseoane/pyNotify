@@ -7,7 +7,7 @@ It provides web based service, API,  and also mobile application, but I was miss
 ## Requirements
 Built on Python 3.11
 
-It also requires Ayatana AppIndicator3 and Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support".
+It also requires Ayatana AppIndicator3 and Gnome shell extension "AppIndicator and KStatusNotifierItem Support".
 
 To install support for Ayatana AppIndicator3 library:
 
@@ -23,7 +23,7 @@ To install support for Ayatana AppIndicator3 library:
       sudo dnf install libappindicator-gtk3
       sudo dnf install pkg-config python3.11-devel
 
-The Gnome-desktop extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
+The Gnome shell extension "AppIndicator and KStatusNotifierItem Support" can be installed from : https://extensions.gnome.org/extension/615/appindicator-support/
   
 
 ## Installation
