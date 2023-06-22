@@ -40,7 +40,7 @@ pkgver() {
 # }
 
 build() {
-	cd "$pkgname/$pkgver"
+	cd "$pkgname"
 	sh build.Arch.sh
 }
 
