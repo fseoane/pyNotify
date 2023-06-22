@@ -6,8 +6,7 @@ sudo cp dist/pyNotify.desktop /opt/pyNotify/
 sudo cp dist/notification.* /opt/pyNotify/
 
 read -r -p "Install default configuration file (pyNotify.conf)? [y/N] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
-then
+if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
         sudo cp dist/pyNotify.conf /opt/pyNotify/
 		echo "ATENTION:"
 		echo "Please configure file /opt/pyNotify/pyNotify.conf with your proper values"
