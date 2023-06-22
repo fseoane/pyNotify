@@ -34,10 +34,10 @@ pkgver() {
 	printf "0.4.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-# prepare() {
-# 	cd "$pkgname-$pkgver"
-# 	patch -p1 -i "$srcdir/pyNotify/$pkgver.patch"
-# }
+prepare() {
+	cd "$pkgname"
+	echo "$pkgver" > pyNotify.ver
+}
 
 build() {
 	cd "$pkgname"
