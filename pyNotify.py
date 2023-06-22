@@ -12,7 +12,11 @@ import PIL.Image
 import psutil
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
- 
+
+pyNotify_version =""
+with open('version.txt', 'rb') as f:
+    pyNotify_version = f.read().decode('utf-8')
+    
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
 	return os.path.isfile(fileFullPathName)
@@ -72,7 +76,11 @@ if __name__ == "__main__":
 	if (SCRIPT_PATH[0]!='/'):
 		PATH_SEPARATOR = '\\'
   
-	pyNotify_version="v0.4"
+	# get the version of the app from file pyNotify.ver
+	pyNotify_version ="??"
+	with open(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.ver', 'rb') as f:
+		pyNotify_version = f.read().decode('utf-8')
+
 	progname = sys.argv[0]
 	processName = progname[progname.rfind(PATH_SEPARATOR)+1:]
 		
@@ -84,10 +92,16 @@ if __name__ == "__main__":
 		sys.exit(1) 
 
 	try:   
+		
 		print ("Loading config from: {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'))
 		config = configparser.ConfigParser()
-		config.read(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
-  
+		if not (config.read(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')):
+			osNotify(
+					"pyNotify ERROR",
+					"{} file couldn´t be found or read.".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
+				)
+			sys.exit(1) 
+
 		conf_gotify_url=config['config']['gotify_url']
 		conf_client_token=config['config']['client_token']
   
