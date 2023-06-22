@@ -108,7 +108,6 @@ if __name__ == "__main__":
 			)
 			sys.exit(1) 
 	
-
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
 
 		tray_icon = pystray.Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
