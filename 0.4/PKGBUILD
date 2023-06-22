@@ -29,6 +29,11 @@ noextract=()
 md5sums=('SKIP')
 validpgpkeys=()
 
+pkgver() {
+	cd "$pkgname-$pkgver"
+	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+}
+
 prepare() {
 	cd "$pkgname-$pkgver"
 	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
