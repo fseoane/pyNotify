@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4.r190.0531970.r192.ef70a88
+pkgver=4.0.r194.04408d8
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -76,7 +76,17 @@ build() {
 
 package() {
 	cd "$pkgname"
+	
+	sudo rm /opt/${pkgname}/${pkgname}
+	sudo rm /opt/${pkgname}/${pkgname}.desktop
+	sudo rm /opt/${pkgname}/${pkgname}.conf.default
+	sudo rm /opt/${pkgname}/${pkgname}.ver
+	sudo rm /opt/${pkgname}/*.ogg
+	sudo rm /opt/${pkgname}/*.png
+	sudo rm /opt/${pkgname}/*.svg
+
 	sudo mkdir -p /opt/${pkgname}
+	
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
 	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.ogg /opt/${pkgname}/
