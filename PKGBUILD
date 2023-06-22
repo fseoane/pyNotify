@@ -55,11 +55,11 @@ package() {
 	mkdir -p /opt/${pkgname}
 	make PREFIX=/opt DESTDIR="${pkgdir}" install
 	#cp ${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
-	cp ${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
-	cp *.ogg /opt/${pkgname}/
-	cp *.png /opt/${pkgname}/
-	cp *.svg /opt/${pkgname}/
-	cp *.conf /opt/${pkgname}/${pkgname}.conf.default
+	sudo cp ${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
+	sudo cp *.ogg /opt/${pkgname}/
+	sudo cp *.png /opt/${pkgname}/
+	sudo cp *.svg /opt/${pkgname}/
+	sudo cp *.conf /opt/${pkgname}/${pkgname}.conf.default
 	chmod -R 755 ${pkgdir}/opt/${pkgname}
 	chown -R root:users ${pkgdir}/opt/${pkgname}
 	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
