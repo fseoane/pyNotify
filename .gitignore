@@ -1,8 +1,7 @@
 _*_
-dist/*
-.env/*
-build/*
+*dist/*
+*.env/*
+*build/*
 .pyNotify.conf
-pyNotify.spec
-test.py
+*pyNotify.spec
 *.log
