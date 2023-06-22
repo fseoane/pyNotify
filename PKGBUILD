@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4.r178.bac49f0
+pkgver=0.4.r179.2f88b72
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -41,26 +41,25 @@ prepare() {
 
 build() {
 	cd "$pkgname"
-	#sh build.Arch.sh
 	mkdir .env 
 	python -m venv .env
 	source .env/bin/activate
 
-	sudo -S pacman -S libappindicator-gtk3
+	# sudo -S pacman -S libappindicator-gtk3
 
-	python  -m pip install --upgrade pip # setuptools wheel
+	# python  -m pip install --upgrade pip # setuptools wheel
 
-	python -m pip uninstall gotify
-	python -m pip uninstall gotify[stream]
-	python -m pip uninstall pyinstaller
-	python -m pip uninstall pycairo
-	python -m pip uninstall pygame
-	python -m pip uninstall pygobject
-	python -m pip uninstall asyncio
-	python -m pip uninstall pystray
-	python -m pip uninstall pillow
-	python -m pip uninstall websockets
-	python -m pip uninstall psutil
+	# python -m pip uninstall gotify
+	# python -m pip uninstall gotify[stream]
+	# python -m pip uninstall pyinstaller
+	# python -m pip uninstall pycairo
+	# python -m pip uninstall pygame
+	# python -m pip uninstall pygobject
+	# python -m pip uninstall asyncio
+	# python -m pip uninstall pystray
+	# python -m pip uninstall pillow
+	# python -m pip uninstall websockets
+	# python -m pip uninstall psutil
 
 	python -m pip cache purge
 
@@ -78,12 +77,12 @@ build() {
 
 	pyinstaller --onefile --windowed pyNotify.py
 
-	cp notification.ogg dist
-	cp notification.svg dist
-	cp notification.png dist
-	cp pyNotify.desktop dist
-	cp install.binaries.sh dist/install.sh
-	cp pyNotify.conf dist/pyNotify.conf
+	# cp notification.ogg dist
+	# cp notification.svg dist
+	# cp notification.png dist
+	# cp pyNotify.desktop dist
+	# cp install.binaries.sh dist/install.sh
+	# cp pyNotify.conf dist/pyNotify.conf
 
 	deactivate
 	rm -rf .env
