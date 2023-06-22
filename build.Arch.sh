@@ -20,7 +20,7 @@ python -m pip install pillow
 python -m pip install websockets
 python -m pip install psutil
 
-pyinstaller --onefile --windowed pyNotify.py
+pyinstaller --onefile --console pyNotify.py
 
 cp notification.ogg dist
 cp notification.svg dist
