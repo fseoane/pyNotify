@@ -12,10 +12,6 @@ import PIL.Image
 import psutil
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
-
-pyNotify_version =""
-with open('version.txt', 'rb') as f:
-    pyNotify_version = f.read().decode('utf-8')
     
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
