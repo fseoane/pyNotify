@@ -13,6 +13,7 @@ import psutil
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
     
+	
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
 	return os.path.isfile(fileFullPathName)
