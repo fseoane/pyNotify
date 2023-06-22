@@ -73,7 +73,7 @@ if __name__ == "__main__":
 	if (SCRIPT_PATH[0]!='/'):
 		PATH_SEPARATOR = '\\'
   
-	pyNotify_version="v0.3"
+	pyNotify_version="v0.4"
 	progname = sys.argv[0]
 	processName = progname[progname.rfind(PATH_SEPARATOR)+1:]
 		
