@@ -52,16 +52,16 @@ build() {
 package() {
 	cd "$pkgname"
 	killall $pkgname   # to allow the copy of new file sin case itś already runing
-	mkdir -p ${pkgdir}/opt/${pkgname}
-	cp ${pkgname}/src/${pkgname}/dist/${pkgname} ${pkgdir}/opt/${pkgname}/${pkgname}
-	cp ${pkgname}/src/${pkgname}/${pkgname}.desktop ${pkgdir}/opt/${pkgname}/${pkgname}.desktop
-	cp ${pkgname}/src/${pkgname}/*.ogg ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/src/${pkgname}/*.png ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/src/${pkgname}/*.svg ${pkgdir}/opt/${pkgname}/
-	cp ${pkgname}/src/${pkgname}/*.conf ${pkgdir}/opt/${pkgname}/${pkgname}.conf.default
+	mkdir -p /opt/${pkgname}
+	cp src/${pkgname}/dist/${pkgname} /opt/${pkgname}/${pkgname}
+	cp src/${pkgname}/${pkgname}.desktop /opt/${pkgname}/${pkgname}.desktop
+	cp src/${pkgname}/*.ogg /opt/${pkgname}/
+	cp src/${pkgname}/*.png /opt/${pkgname}/
+	cp src/${pkgname}/*.svg /opt/${pkgname}/
+	cp src/${pkgname}/*.conf /opt/${pkgname}/${pkgname}.conf.default
 	chmod -R 755 ${pkgdir}/opt/${pkgname}
 	chown -R root:users ${pkgdir}/opt/${pkgname}
-	desktop-file-install --dir=$HOME/.local/share/applications ${pkgdir}/opt/${pkgname}/${pkgname}.desktop
+	desktop-file-install --dir=$HOME/.local/share/applications /opt/${pkgname}/${pkgname}.desktop
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 
