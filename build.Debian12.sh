@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install python3.11-venv
+
 mkdir -p .env 
 python3.11 -m venv .env
 source .env/bin/activate
