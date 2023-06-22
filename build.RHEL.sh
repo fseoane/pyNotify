@@ -9,8 +9,6 @@ python3.11  -m pip install --upgrade pip setuptools wheel
 
 python3.11  -m pip install --upgrade gotify
 python3.11  -m pip install --upgrade gotify[stream]
-#python3.11  -m pip install --use-pep517 playsound
-#python3.11  -m pip install --upgrade playsound
 python3.11  -m pip install --upgrade pygame
 python3.11  -m pip install --upgrade pyinstaller
 python3.11  -m pip install --upgrade pycairo
