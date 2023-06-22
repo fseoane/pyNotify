@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=4.0.r194.04408d8
+pkgver=4.0
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -33,12 +33,14 @@ validpgpkeys=()
 pkgver() {
 	cd "${_pkgname}"
 	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	cd "$pkgname"
+	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)" > pyNotify.ver
 }
 
-prepare() {
-	cd "$pkgname"
-	echo "$pkgver" > pyNotify.ver
-}
+# prepare() {
+# 	cd "$pkgname"
+# 	echo "$pkgver" > pyNotify.ver
+# }
 
 build() {
 	sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
@@ -76,7 +78,7 @@ build() {
 
 package() {
 	cd "$pkgname"
-	
+
 	sudo rm /opt/${pkgname}/${pkgname}
 	sudo rm /opt/${pkgname}/${pkgname}.desktop
 	sudo rm /opt/${pkgname}/${pkgname}.conf.default
