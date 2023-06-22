@@ -1,8 +1,10 @@
-sudo -S pacman -S libappindicator-gtk3
+#!/bin/bash
 
 mkdir .env 
 python -m venv .env
 source .env/bin/activate
+
+sudo -S pacman -S libappindicator-gtk3
 
 python  -m pip install --upgrade pip setuptools wheel
 
