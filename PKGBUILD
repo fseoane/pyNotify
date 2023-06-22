@@ -5,7 +5,7 @@
 
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 pkgname=pyNotify
-pkgver=0.4.r172.319e11d
+pkgver=0.4.r174.48533b0
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -13,8 +13,8 @@ arch=('x86_64')
 url="https://github.com/fseoane/pyNotify.git"
 license=('MIT')
 groups=()
-depends=(libappindicator-gtk3 gnome-shell-extension-appindicator)
-makedepends=(git python3 python-pip python-virtualenv)
+depends=('libappindicator-gtk3' 'gnome-shell-extension-appindicator')
+makedepends=('git' 'python3' 'python-pip' 'python-virtualenv')
 checkdepends=()
 optdepends=()
 provides=(pyNotify)
@@ -62,7 +62,7 @@ build() {
 	python -m pip uninstall websockets
 	python -m pip uninstall psutil
 
-	python -m pip cache remove * 
+	python -m pip cache purge
 
 	#python -m pip install gotify
 	python -m pip install gotify[stream]
