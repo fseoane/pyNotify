@@ -1,6 +1,6 @@
 # Maintainer: Fernando Seoane <fseoane@hotmail.com>
 mypackagename=pyNotify
-pkgname=pynotify-git
+pkgname=pyNotify
 pkgbase=pynotify-git
 pkgver=0.5
 pkgrel=1
@@ -21,15 +21,13 @@ backup=()
 options=()
 install=
 changelog=
-source=("$mypackagename::$url")
+source=("git+$url")
 noextract=()
 md5sums=('SKIP')
 validpgpkeys=()
 
 
-
 pkgver() {
-	#cd "${pkgname}"
 	cd "$mypackagename"
 	printf "$pkgver.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
@@ -65,21 +63,19 @@ build() {
 	rm -rf .env
 }
 
-
 package() {
 	cd "$mypackagename"
-
 	sudo mkdir -p /opt/${mypackagename}
 	
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/dist/${mypackagename} /opt/${mypackagename}/${mypackagename}
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${mypackagename}.desktop /opt/${mypackagename}/${mypackagename}.desktop
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.ogg /opt/${mypackagename}/
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.png /opt/${mypackagename}/
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/*.svg /opt/${mypackagename}/
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${mypackagename}.ver /opt/${mypackagename}/${mypackagename}.ver
-	sudo install -Dm755 --owner=root --group=users ${srcdir}/${pkgname}/${mypackagename}.conf /opt/${mypackagename}/${mypackagename}.conf.sample
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/dist/${mypackagename} /opt/${mypackagename}/${mypackagename}
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/${mypackagename}.desktop /opt/${mypackagename}/${mypackagename}.desktop
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/*.ogg /opt/${mypackagename}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/*.png /opt/${mypackagename}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/*.svg /opt/${mypackagename}/
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/${mypackagename}.ver /opt/${mypackagename}/${mypackagename}.ver
+	sudo install -Dm755 --owner=root --group=users ${srcdir}/${mypackagename}/${mypackagename}.conf /opt/${mypackagename}/${mypackagename}.conf.sample
 
 	desktop-file-install --dir=$HOME/.local/share/applications /opt/${mypackagename}/${mypackagename}.desktop
-	sudo install -Dm644 LICENSE "/usr/share/licenses/${pkgname}/LICENSE"
-	sudo install -Dm644 README.md "/usr/share/doc/${pkgname}/README.md"
+	sudo install -Dm644 LICENSE "/usr/share/licenses/${mypackagename}/LICENSE"
+	sudo install -Dm644 README.md "/usr/share/doc/${mypackagename}/README.md"
 }
