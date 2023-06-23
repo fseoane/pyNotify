@@ -30,6 +30,8 @@ mypackagename=pyNotify
 pkgver() {
 	cd "${_pkgbase}"
 	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	cd "$pkgname"
+	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)" > pyNotify.ver
 }
 
 prepare() {
