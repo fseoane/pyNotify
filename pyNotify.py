@@ -95,7 +95,7 @@ if __name__ == "__main__":
 		else:
 			configFile=SCRIPT_PATH+PATH_SEPARATOR+"pyNotify.conf"
 
-		print ("Loading config from: {}".format(configFile))
+		print ("Reading config from: {}".format(configFile))
 		config = configparser.ConfigParser()
 		if not (config.read(configFile)):
 			osNotify(
@@ -104,7 +104,9 @@ if __name__ == "__main__":
 				)
 			print ("ERROR: Could not load config from: {}".format(configFile))
 			sys.exit(1) 
-
+		else:
+			print ("...config file {} in use".format(configFile))
+		
 		conf_gotify_url=config['config']['gotify_url']
 		if (conf_gotify_url=="https://gotify-host:port"):
 			osNotify(
@@ -113,9 +115,12 @@ if __name__ == "__main__":
 				)
 			print ("ERROR: Configure your values at {}".format(configFile))
 			sys.exit(1) 
-
+		else:
+			print ("   .- Gotify URL {} ".format(conf_gotify_url))
+		
 		conf_client_token=config['config']['client_token']
-  
+		print ("   .- Token {} ".format(conf_client_token))
+		
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
 		if not checkIfFileExists(conf_tray_icon):
 			osNotify(
@@ -124,7 +129,9 @@ if __name__ == "__main__":
 			)
 			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
 			sys.exit(1) 
-   
+		else:
+			print ("   .- Icon {} ".format(conf_tray_icon))
+		
 		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
 		if not checkIfFileExists(conf_notification_sound):
 			osNotify(
@@ -133,7 +140,9 @@ if __name__ == "__main__":
 			)
 			print ("ERROR: Notification sound file {} not found".format(conf_notification_sound))
 			sys.exit(1) 
-	
+		else:
+			print ("   .- Notif {} ".format(conf_notification_sound))
+		
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
 		print("...built tray icon image")
 
