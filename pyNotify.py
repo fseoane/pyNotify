@@ -101,6 +101,7 @@ if __name__ == "__main__":
 					"pyNotify ERROR",
 					"{} file couldn´t be found or read.".format(configFile)
 				)
+			print ("ERROR: Could not load config from: {}".format(configFile))
 			sys.exit(1) 
 
 		conf_gotify_url=config['config']['gotify_url']
@@ -109,6 +110,7 @@ if __name__ == "__main__":
 					"pyNotify ERROR",
 					"Configure {} with your values.".format(configFile)
 				)
+			print ("ERROR: Configure your values at {}".format(configFile))
 			sys.exit(1) 
 
 		conf_client_token=config['config']['client_token']
@@ -117,8 +119,9 @@ if __name__ == "__main__":
 		if not checkIfFileExists(conf_tray_icon):
 			osNotify(
 				"pyNotify ERROR",
-				"{} file does not exist.\nCheck your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
+				"{} file does not exist. Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
+			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
 			sys.exit(1) 
    
 		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
@@ -127,10 +130,11 @@ if __name__ == "__main__":
 				"pyNotify ERROR",
 				"{} file does not exist.\nCheck your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
+			print ("ERROR: Notification sound file {} not found".format(conf_notification_sound))
 			sys.exit(1) 
 	
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
-		print("...found tray icon")
+		print("...built tray icon image")
 
 
 		tray_icon = pystray.Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
