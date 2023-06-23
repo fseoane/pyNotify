@@ -104,6 +104,12 @@ if __name__ == "__main__":
 			sys.exit(1) 
 
 		conf_gotify_url=config['config']['gotify_url']
+		if (conf_gotify_url=="https://gotify-host:port"):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			sys.exit(1) 
 		conf_client_token=config['config']['client_token']
   
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
