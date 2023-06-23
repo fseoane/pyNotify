@@ -141,13 +141,13 @@ if __name__ == "__main__":
 			menu=pystray.Menu(
 				pystray.MenuItem("About",
                     pystray.Menu(
-						pystray.MenuItem("     pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						pystray.MenuItem(" pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("Conf:  {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("Server:{}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("Token: {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						pystray.MenuItem(" Conf:   {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						pystray.MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						pystray.MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
     				)
                 ),
 				pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
