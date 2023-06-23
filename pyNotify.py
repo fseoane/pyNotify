@@ -65,6 +65,7 @@ def tray_icon_on_clicked(tray_icon, item):
 		runner.close()
 		sys.exit(0)
 
+
 if __name__ == "__main__":
 	global runner
 
