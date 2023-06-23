@@ -1,6 +1,6 @@
-pkgbase = pyNotify
+pkgbase = pynotify-git
 	pkgdesc = A Gnome (wayland) shell notifier for Gotify server.
-	pkgver = 4.0
+	pkgver = 0.5
 	pkgrel = 1
 	url = https://github.com/fseoane/pyNotify.git
 	arch = x86_64
@@ -8,7 +8,6 @@ pkgbase = pyNotify
 	makedepends = git
 	makedepends = python3
 	makedepends = python-pip
-	makedepends = python-virtualenv
 	depends = libappindicator-gtk3
 	depends = gnome-shell-extension-appindicator
 	provides = pyNotify
@@ -17,4 +16,4 @@ pkgbase = pyNotify
 	source = git+https://github.com/fseoane/pyNotify.git
 	md5sums = SKIP
 
-pkgname = pyNotify
+pkgname = pynotify-git
