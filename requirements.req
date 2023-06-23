@@ -1,0 +1,11 @@
+os 
+sys 
+configparser 
+asyncio 
+threading 
+gotify[stream] 
+subprocess 
+pystray 
+PIL 
+psutil 
+pygame
