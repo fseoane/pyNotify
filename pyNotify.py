@@ -110,6 +110,7 @@ if __name__ == "__main__":
 					"Configure {} with your values.".format(configFile)
 				)
 			sys.exit(1) 
+
 		conf_client_token=config['config']['client_token']
   
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
@@ -129,6 +130,8 @@ if __name__ == "__main__":
 			sys.exit(1) 
 	
 		pyNotify_icon=PIL.Image.open(conf_tray_icon)
+		print("...found tray icon")
+
 
 		tray_icon = pystray.Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
 			menu=pystray.Menu(
@@ -147,10 +150,11 @@ if __name__ == "__main__":
 				pystray.MenuItem("Quit", tray_icon_on_clicked)
 			)
 		)
-		
+		print("...built tray menu")
+
 		# Run the icon mainloop in first thread
 		threading.Thread(target=tray_icon.run).start()
-		print("...placed tray icon")
+		print("...placed icon in tray")
 
 		# Run the gotify listener asynchronously in a second thread
 		with asyncio.Runner() as runner:
