@@ -1,27 +1,33 @@
 
-import os
-import sys
-import configparser
-import asyncio
-import threading
+#import os
+from os import path,getcwd
+#import sys
+from sys import argv, exit
+#import configparser
+from configparser import ConfigParser
+#import asyncio
+from asyncio import Runner
+#import threading
+from threading import Thread
 from gotify import AsyncGotify  
 import subprocess
 import json
-import pystray
-import PIL.Image
-import psutil
+#import pystray
+#import PIL.Image
+from PIL import Image
+from psutil import process_iter
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
 
 	
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
-	return os.path.isfile(fileFullPathName)
+	return path.isfile(fileFullPathName)
 
 def checkIfProcessRunning(processName):
 	# Check if there is any running process that contains the given name processName.
 	countProcesses = 0
-	for proc in psutil.process_iter():
+	for proc in process_iter(): # psutil.process_iter():
 		if (proc.name().lower() == processName.lower()):
 			countProcesses+=1
    
@@ -63,14 +69,14 @@ def tray_icon_on_clicked(tray_icon, item):
 	if str(item) == "Quit":
 		tray_icon.stop()
 		runner.close()
-		sys.exit(0)
+		exit(0)
 
 
 if __name__ == "__main__":
 	global runner
 
 	PATH_SEPARATOR = '/'
-	SCRIPT_PATH = os.getcwd()
+	SCRIPT_PATH = getcwd()
 	if (SCRIPT_PATH[0]!='/'):
 		PATH_SEPARATOR = '\\'
   
@@ -79,7 +85,7 @@ if __name__ == "__main__":
 	with open(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.ver', 'rb') as f:
 		pyNotify_version = f.read().decode('utf-8')
 
-	progname = sys.argv[0]
+	progname = argv[0]
 	processName = progname[progname.rfind(PATH_SEPARATOR)+1:]
 		
 	if checkIfProcessRunning(processName):
@@ -87,7 +93,7 @@ if __name__ == "__main__":
       		"pyNotify ERROR",
 			"{} process already exists. {} seems to be running. Exiting".format(processName,processName)
       	)
-		sys.exit(1) 
+		exit(1) 
 
 	try:   
 		configFile=""
@@ -104,7 +110,7 @@ if __name__ == "__main__":
 					"{} file couldn´t be found or read.".format(configFile)
 				)
 			print ("ERROR: Could not load config from: {}".format(configFile))
-			sys.exit(1) 
+			exit(1) 
 		else:
 			print ("...config file {} in use".format(configFile))
 		
@@ -115,7 +121,7 @@ if __name__ == "__main__":
 					"Configure {} with your values.".format(configFile)
 				)
 			print ("ERROR: Configure your values at {}".format(configFile))
-			sys.exit(1) 
+			exit(1) 
 		else:
 			print ("   .- Gotify URL {} ".format(conf_gotify_url))
 		
@@ -129,7 +135,7 @@ if __name__ == "__main__":
 				"{} file does not exist. Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
 			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
-			sys.exit(1) 
+			exit(1) 
 		else:
 			print ("   .- Icon {} ".format(conf_tray_icon))
 		
@@ -140,11 +146,11 @@ if __name__ == "__main__":
 				"{} file does not exist.\nCheck your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
 			print ("ERROR: Notification sound file {} not found".format(conf_notification_sound))
-			sys.exit(1) 
+			exit(1) 
 		else:
 			print ("   .- Notif {} ".format(conf_notification_sound))
 		
-		pyNotify_icon=PIL.Image.open(conf_tray_icon)
+		pyNotify_icon=Image.open(conf_tray_icon) #PIL.Image.open(conf_tray_icon)
 		print("...built tray icon image")
 
 
@@ -168,12 +174,12 @@ if __name__ == "__main__":
 		print("...built tray menu")
 
 		# Run the icon mainloop in first thread
-		threading.Thread(target=tray_icon.run).start()
+		Thread(target=tray_icon.run).start()
 		print("...placed icon in tray")
 
 		# Run the gotify listener asynchronously in a second thread
-		with asyncio.Runner() as runner:
+		with Runner() as runner:
 			print("...starting loop")
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 	finally:
-		sys.exit(0) 
+		exit(0) 
