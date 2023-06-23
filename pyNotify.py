@@ -8,8 +8,8 @@ from gotify import AsyncGotify
 import subprocess
 import json
 import pystray
-import PIL.Image
-import psutil
+from PIL import Image
+from psutil import Process
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from mixer import pygame
 
