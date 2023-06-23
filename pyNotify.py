@@ -1,23 +1,15 @@
 
-#import os
-from os import path,getcwd
-#import sys
+from os import path,getcwd,environ
 from sys import argv, exit
-#import configparser
 from configparser import ConfigParser
-#import asyncio
 from asyncio import Runner
-#import threading
 from threading import Thread
 from gotify import AsyncGotify  
 from subprocess import run as sp_run
-#import json
-#import pystray
 from pystray import Icon, Menu, MenuItem
-#import PIL.Image
 from PIL import Image
 from psutil import process_iter
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
 
 	
@@ -28,7 +20,7 @@ def checkIfFileExists(fileFullPathName):
 def checkIfProcessRunning(processName):
 	# Check if there is any running process that contains the given name processName.
 	countProcesses = 0
-	for proc in process_iter(): # psutil.process_iter():
+	for proc in process_iter(): 
 		if (proc.name().lower() == processName.lower()):
 			countProcesses+=1
    
@@ -41,9 +33,9 @@ def osNotify(title,message):
     sp_run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",title, message],check=True)
 
 def play_ogg(file_path):
-    pygame.mixer.init()
-    pygame.mixer.music.load(file_path)
-    pygame.mixer.music.play()
+    mixer.init()
+    mixer.music.load(file_path)
+    mixer.music.play()
 
 async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global EXIT_REQUESTED
@@ -56,12 +48,10 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
   
 	async for msg in async_gotify.stream():
-		#playsound(conf_notification_sound)
 		play_ogg(conf_notification_sound)
 		if (tray_icon.HAS_NOTIFICATION):
 			tray_icon.notify(message=msg["message"],title=msg["title"])
 		else:
-			#subprocess.run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",msg["title"], msg["message"]],check=True)
 			osNotify(msg["title"],msg["message"],"notification")
 
 
@@ -151,7 +141,7 @@ if __name__ == "__main__":
 		else:
 			print ("   .- Notif {} ".format(conf_notification_sound))
 		
-		pyNotify_icon=Image.open(conf_tray_icon) #PIL.Image.open(conf_tray_icon)
+		pyNotify_icon=Image.open(conf_tray_icon) 
 		print("...built tray icon image")
 
 
