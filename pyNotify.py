@@ -11,7 +11,7 @@ import pystray
 import PIL.Image
 import psutil
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
-import pygame
+import mixer from pygame
     
 	
 def checkIfFileExists(fileFullPathName):
