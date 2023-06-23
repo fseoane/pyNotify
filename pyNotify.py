@@ -89,13 +89,17 @@ if __name__ == "__main__":
 		sys.exit(1) 
 
 	try:   
-		
-		print ("Loading config from: {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'))
+		if (PATH_SEPARATOR == '/'):
+			configFile="/etc/pyNotify.conf"
+		else:
+			configFile=SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'
+
+		print ("Loading config from: {}".format(configFile))
 		config = configparser.ConfigParser()
-		if not (config.read(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')):
+		if not (config.read(configFile)):
 			osNotify(
 					"pyNotify ERROR",
-					"{} file couldn´t be found or read.".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
+					"{} file couldn´t be found or read.".format(configFile)
 				)
 			sys.exit(1) 
 
