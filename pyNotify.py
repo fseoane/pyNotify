@@ -10,9 +10,10 @@ from asyncio import Runner
 #import threading
 from threading import Thread
 from gotify import AsyncGotify  
-import subprocess
-import json
+from subprocess import run as sp_run
+#import json
 #import pystray
+from pystray import Icon, Menu, MenuItem
 #import PIL.Image
 from PIL import Image
 from psutil import process_iter
@@ -37,7 +38,7 @@ def checkIfProcessRunning(processName):
 	return False
 
 def osNotify(title,message):
-    subprocess.run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",title, message],check=True)
+    sp_run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",title, message],check=True)
 
 def play_ogg(file_path):
     pygame.mixer.init()
@@ -154,21 +155,21 @@ if __name__ == "__main__":
 		print("...built tray icon image")
 
 
-		tray_icon = pystray.Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
-			menu=pystray.Menu(
-				pystray.MenuItem("About",
-                    pystray.Menu(
-						pystray.MenuItem(" pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+		tray_icon = Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
+			menu=Menu(
+				MenuItem("About",
+                    Menu(
+						MenuItem(" pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
     				)
                 ),
-				pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-				pystray.MenuItem("Quit", tray_icon_on_clicked)
+				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+				MenuItem("Quit", tray_icon_on_clicked)
 			)
 		)
 		print("...built tray menu")
