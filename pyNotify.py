@@ -89,10 +89,11 @@ if __name__ == "__main__":
 		sys.exit(1) 
 
 	try:   
+		configFile=""
 		if (PATH_SEPARATOR == '/'):
 			configFile="/etc/pyNotify.conf"
 		else:
-			configFile=SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'
+			configFile=SCRIPT_PATH+PATH_SEPARATOR+"pyNotify.conf"
 
 		print ("Loading config from: {}".format(configFile))
 		config = configparser.ConfigParser()
@@ -145,7 +146,7 @@ if __name__ == "__main__":
 						pystray.MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem(" Conf:   {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						pystray.MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						pystray.MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
     				)
