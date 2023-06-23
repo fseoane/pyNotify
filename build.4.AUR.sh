@@ -22,4 +22,4 @@ python -m pip install --requirement requirements.req
 pyinstaller --onefile --windowed pyNotify.py
 
 deactivate
-rm -rf .env
+#rm -rf .env
