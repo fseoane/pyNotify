@@ -1,27 +1,34 @@
 
-import os
-import sys
-import configparser
-import asyncio
-import threading
+#import os
+from os import path,getcwd
+#import sys
+from sys import argv, exit
+#import configparser
+from configparser import ConfigParser
+#import asyncio
+from asyncio import Runner
+#import threading
+from threading import Thread
 from gotify import AsyncGotify  
-import subprocess
-import json
-import pystray
-import PIL.Image
-import psutil
+from subprocess import run as sp_run
+#import json
+#import pystray
+from pystray import Icon, Menu, MenuItem
+#import PIL.Image
+from PIL import Image
+from psutil import process_iter
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
-import pygame
-    
+from pygame import mixer
+
 	
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
-	return os.path.isfile(fileFullPathName)
+	return path.isfile(fileFullPathName)
 
 def checkIfProcessRunning(processName):
 	# Check if there is any running process that contains the given name processName.
 	countProcesses = 0
-	for proc in psutil.process_iter():
+	for proc in process_iter(): # psutil.process_iter():
 		if (proc.name().lower() == processName.lower()):
 			countProcesses+=1
    
@@ -31,7 +38,7 @@ def checkIfProcessRunning(processName):
 	return False
 
 def osNotify(title,message):
-    subprocess.run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",title, message],check=True)
+    sp_run(["notify-send", "-u", "normal", "-i", "notification", "-t", "3000",title, message],check=True)
 
 def play_ogg(file_path):
     pygame.mixer.init()
@@ -63,13 +70,14 @@ def tray_icon_on_clicked(tray_icon, item):
 	if str(item) == "Quit":
 		tray_icon.stop()
 		runner.close()
-		sys.exit(0)
+		exit(0)
+
 
 if __name__ == "__main__":
 	global runner
 
 	PATH_SEPARATOR = '/'
-	SCRIPT_PATH = os.getcwd()
+	SCRIPT_PATH = getcwd()
 	if (SCRIPT_PATH[0]!='/'):
 		PATH_SEPARATOR = '\\'
   
@@ -78,7 +86,7 @@ if __name__ == "__main__":
 	with open(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.ver', 'rb') as f:
 		pyNotify_version = f.read().decode('utf-8')
 
-	progname = sys.argv[0]
+	progname = argv[0]
 	processName = progname[progname.rfind(PATH_SEPARATOR)+1:]
 		
 	if checkIfProcessRunning(processName):
@@ -86,65 +94,93 @@ if __name__ == "__main__":
       		"pyNotify ERROR",
 			"{} process already exists. {} seems to be running. Exiting".format(processName,processName)
       	)
-		sys.exit(1) 
+		exit(1) 
 
 	try:   
-		
-		print ("Loading config from: {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'))
-		config = configparser.ConfigParser()
-		if not (config.read(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')):
+		configFile=""
+		if (PATH_SEPARATOR == '/'):
+			configFile="/etc/pyNotify.conf"
+		else:
+			configFile=SCRIPT_PATH+PATH_SEPARATOR+"pyNotify.conf"
+
+		print ("Reading config from: {}".format(configFile))
+		config = ConfigParser()
+		if not (config.read(configFile)):
 			osNotify(
 					"pyNotify ERROR",
-					"{} file couldn´t be found or read.".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
+					"{} file couldn´t be found or read.".format(configFile)
 				)
-			sys.exit(1) 
-
+			print ("ERROR: Could not load config from: {}".format(configFile))
+			exit(1) 
+		else:
+			print ("...config file {} in use".format(configFile))
+		
 		conf_gotify_url=config['config']['gotify_url']
+		if (conf_gotify_url=="https://gotify-host:port"):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			print ("   .- Gotify URL {} ".format(conf_gotify_url))
+		
 		conf_client_token=config['config']['client_token']
-  
+		print ("   .- Token {} ".format(conf_client_token))
+		
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
 		if not checkIfFileExists(conf_tray_icon):
 			osNotify(
 				"pyNotify ERROR",
-				"{} file does not exist.\nCheck your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
+				"{} file does not exist. Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
-			sys.exit(1) 
-   
+			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
+			exit(1) 
+		else:
+			print ("   .- Icon {} ".format(conf_tray_icon))
+		
 		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
 		if not checkIfFileExists(conf_notification_sound):
 			osNotify(
 				"pyNotify ERROR",
 				"{} file does not exist.\nCheck your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
 			)
-			sys.exit(1) 
-	
-		pyNotify_icon=PIL.Image.open(conf_tray_icon)
+			print ("ERROR: Notification sound file {} not found".format(conf_notification_sound))
+			exit(1) 
+		else:
+			print ("   .- Notif {} ".format(conf_notification_sound))
+		
+		pyNotify_icon=Image.open(conf_tray_icon) #PIL.Image.open(conf_tray_icon)
+		print("...built tray icon image")
 
-		tray_icon = pystray.Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
-			menu=pystray.Menu(
-				pystray.MenuItem("About",
-                    pystray.Menu(
-						pystray.MenuItem("     pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("Conf:  {}".format(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf'),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("Server:{}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						pystray.MenuItem("Token: {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+
+		tray_icon = Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
+			menu=Menu(
+				MenuItem("About",
+                    Menu(
+						MenuItem(" pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
     				)
                 ),
-				pystray.MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-				pystray.MenuItem("Quit", tray_icon_on_clicked)
+				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+				MenuItem("Quit", tray_icon_on_clicked)
 			)
 		)
-		
+		print("...built tray menu")
+
 		# Run the icon mainloop in first thread
-		threading.Thread(target=tray_icon.run).start()
-		print("...placed tray icon")
+		Thread(target=tray_icon.run).start()
+		print("...placed icon in tray")
 
 		# Run the gotify listener asynchronously in a second thread
-		with asyncio.Runner() as runner:
+		with Runner() as runner:
 			print("...starting loop")
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 	finally:
-		sys.exit(0) 
+		exit(0) 
