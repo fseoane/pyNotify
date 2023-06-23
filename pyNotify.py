@@ -103,7 +103,7 @@ if __name__ == "__main__":
 			configFile=SCRIPT_PATH+PATH_SEPARATOR+"pyNotify.conf"
 
 		print ("Reading config from: {}".format(configFile))
-		config = configparser.ConfigParser()
+		config = ConfigParser()
 		if not (config.read(configFile)):
 			osNotify(
 					"pyNotify ERROR",
