@@ -34,10 +34,10 @@ pkgver() {
 	printf "4.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)" > pyNotify.ver
 }
 
-prepare() {
-	cd "$pkgbase"
- 	echo "$pkgver" > pyNotify.ver
-}
+# prepare() {
+# 	cd "$pkgbase"
+#  	echo "$pkgver" > pyNotify.ver
+# }
 
 build() {
 	#sudo pacman -S --needed libappindicator-gtk3 gnome-shell-extension-appindicator
