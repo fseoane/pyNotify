@@ -9,7 +9,7 @@ source .env/bin/activate
 
 python -m pip install -r requirements.req
 
-pyinstaller --onefile --windowed --upx-dir /usr/bin/upx pyNotify.py
+pyinstaller --onefile --windowed --upx-dir /usr/bin/ pyNotify.py
 
 cp notification.ogg dist
 cp notification.svg dist
