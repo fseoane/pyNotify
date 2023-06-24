@@ -55,7 +55,17 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 			osNotify(msg["title"],msg["message"],"notification")
 
 
-def tray_icon_on_clicked(tray_icon, item):
+def tray_icon_mute(tray_icon, item):
+	global on_mute
+	on_mute = not item.checked 
+
+
+def tray_icon_dnd(tray_icon, item):
+	global on_dnd
+	on_dnd = not item.checked 
+
+
+def tray_icon_quit(tray_icon, item):
 	global runner
 	if str(item) == "Quit":
 		tray_icon.stop()
@@ -158,19 +168,21 @@ if __name__ == "__main__":
 
 		tray_icon = Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
 			menu=Menu(
+				MenuItem("Silent mode (no sound)", tray_icon_mute, checked=lambda item: on_mute),
+				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item: on_dnd),
 				MenuItem("About",
-                    Menu(
-						MenuItem(" pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+					Menu(
+						MenuItem(" pyNotify {}".format(version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-    				)
-                ),
+					)
+				),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-				MenuItem("Quit", tray_icon_on_clicked)
+				MenuItem("Quit", tray_icon_quit)
 			)
 		)
 		print("...built tray menu")
