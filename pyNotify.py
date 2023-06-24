@@ -177,8 +177,8 @@ if __name__ == "__main__":
 				MenuItem("About",
 					Menu(
 						MenuItem(" pyNotify {}".format(version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem('    Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem('       Jun 2023',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(' Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(' -Jun 2023-',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
