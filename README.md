@@ -44,9 +44,16 @@ The bash script (install.sh) inside the realease package will copy all the neces
 
 
 ### 1.2.ARCH LINUX: Installing from AUR
-To install the package from AUR (Arch User Repo) you can use an AUR helper like yay and execute:
+To install the application from AUR (Arch User Repo) you can use an AUR helper like yay and execute:
+                
                 yay -S pynotify-git
 
+### 1.3.DEBIAN: Installing from deb package
+To install the application from the deb package in this repo releases you need to download the deb packaga and execute:
+
+                dpkg -i pyNotify.X.Y.deb
+
+where X and Y are the release versions of the application
 
 ## 2.Building / Compiling fron source
 It's also possible to compile from source code in python (pyNotify.py).
