@@ -79,6 +79,9 @@ if __name__ == "__main__":
 	# global on_mute
 	# global on_dnd
 
+	on_mute = False
+	on_dnd = False
+
 	PATH_SEPARATOR = '/'
 	SCRIPT_PATH = getcwd()
 	if (SCRIPT_PATH[0]!='/'):
