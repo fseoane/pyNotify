@@ -2,7 +2,7 @@
 mypackagename=pyNotify   # only if github repo has a different name than this pkgbase/pkgname
 pkgname=pynotify-git
 pkgbase=pynotify-git
-pkgver=0.5
+pkgver=0.6      # remember to also change the version number bellow in the pkgver() function
 pkgrel=1
 epoch=
 pkgdesc="A Gnome (wayland) shell notifier for Gotify server."
@@ -29,7 +29,7 @@ validpgpkeys=()
 
 pkgver() {
 	cd "$mypackagename"
-	printf "0.5.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	printf "0.6.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
@@ -57,8 +57,8 @@ package() {
 	install -Dm644 --owner=root --group=root ${srcdir}/${mypackagename}/${mypackagename}.conf ${pkgdir}/etc/${mypackagename}.conf
 
 
-	desktop-file-install ${pkgdir}/opt/${mypackagename}/${mypackagename}.desktop
 	#desktop-file-install --dir=$HOME/.local/share/applications ${pkgdir}/opt/${mypackagename}/${mypackagename}.desktop
+	desktop-file-install --dir=$pkgdir/usr/share/applications ${pkgdir}/opt/${mypackagename}/${mypackagename}.desktop
 	install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${mypackagename}/LICENSE"
 	install -Dm644 README.md "${pkgdir}/usr/share/doc/${mypackagename}/README.md"
 }
