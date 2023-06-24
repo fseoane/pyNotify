@@ -171,8 +171,8 @@ if __name__ == "__main__":
 
 		tray_icon = Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
 			menu=Menu(
-				MenuItem("Silent mode (no sound)", tray_icon_mute, checked=lambda item: on_mute),
-				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item: on_dnd),
+				MenuItem("Silent mode (no sound)", tray_icon_mute, checked=lambda MenuItem: on_mute),
+				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda MenuItem: on_dnd),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("About",
 					Menu(
