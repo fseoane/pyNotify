@@ -15,7 +15,6 @@ cp notification.ogg dist
 cp notification.svg dist
 cp notification.png dist
 cp pyNotify.ver dist
-cp pyNotify.ver dist
 cp pyNotify.desktop dist
 cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf

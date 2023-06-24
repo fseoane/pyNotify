@@ -19,3 +19,4 @@ fi
 sudo chmod -R 755 /opt/pyNotify
 sudo chown -R root:users /opt/pyNotify
 sudo desktop-file-install --dir=$HOME/.local/share/applications /opt/pyNotify/pyNotify.desktop
+echo "Done"
