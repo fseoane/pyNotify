@@ -10,6 +10,7 @@ mkdir -p .env
 python3.11  -m venv .env
 source .env/bin/activate
 
+python3.11 -m pip install --upgrade pip
 python3.11 -m pip install -r requirements.req
 
 pyinstaller --onefile --windowed pyNotify.py
