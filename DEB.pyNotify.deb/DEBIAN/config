@@ -1,0 +1,10 @@
+#!/bin/bash
+read -r -p "Install default configuration file (pyNotify.conf)? [y/N] " response
+if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+	sudo cp etc/pyNotify.conf /opt/pyNotify/
+	sudo cp etc/pyNotify.conf /etc/
+	echo "ATENTION:"
+	echo "Please configure file /etc/pyNotify.conf with your proper values"
+else
+	echo "Skipped"
+fi

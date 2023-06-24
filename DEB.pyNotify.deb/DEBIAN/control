@@ -1,0 +1,11 @@
+Package: pyNotify
+Version: 0.5
+Maintainer: Fernando Seoane <fseoane@hotmail.com>
+Homepage: https://github.com/fseoane/pyNotify
+Architecture: amd64
+Description: a Gnome shell (wayland) notifier for Gotify server
+Depends: gnome-shell-extension-appindicator,libnotify-bin
+Provides: pyNotify
+Conflicts: pyNotify
+Replaces: pyNotify
+
