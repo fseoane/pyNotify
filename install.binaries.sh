@@ -1,8 +1,6 @@
 
 killall pyNotify
 
-echo "$pkgver.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
-
 sudo mkdir -p /opt/pyNotify
 sudo cp pyNotify /opt/pyNotify/
 sudo cp pyNotify.ver /opt/pyNotify/
