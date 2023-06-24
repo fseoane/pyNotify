@@ -2,7 +2,6 @@
 
 echo "0.5.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
 
-
 mkdir -p .env 
 python -m venv .env
 source .env/bin/activate
