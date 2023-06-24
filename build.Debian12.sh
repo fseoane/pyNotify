@@ -16,7 +16,7 @@ python3 -m venv .env
 
 python3 -m pip install -r requirements.req
 
-pyinstaller --onefile --windowed pyNotify.py
+pyinstaller --onefile --windowed --icon notification.svg --upx-dir /usr/bin/ pyNotify.py
 
 cp notification.ogg dist
 cp notification.svg dist

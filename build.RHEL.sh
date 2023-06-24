@@ -13,7 +13,7 @@ source .env/bin/activate
 python3.11 -m pip install --upgrade pip
 python3.11 -m pip install -r requirements.req
 
-pyinstaller --onefile --windowed pyNotify.py
+pyinstaller --onefile --windowed --icon notification.svg --upx-dir /usr/bin/ pyNotify.py
 
 cp notification.ogg dist
 cp notification.svg dist
