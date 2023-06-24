@@ -38,6 +38,8 @@ def play_ogg(file_path):
     mixer.music.play()
 
 async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,on_mute,on_dnd):
+	print(on_mute)
+	print(on_dnd)
 	if not on_dnd:
 		async_gotify = AsyncGotify(
 			base_url=conf_gotify_url,
