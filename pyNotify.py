@@ -58,12 +58,12 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 				osNotify(msg["title"],msg["message"],"notification")
 
 
-def tray_icon_mute(tray_icon, item):
+def tray_icon_mute(tray_icon, item_mute):
 	global on_mute
 	on_mute = not item_mute.checked 
 
 
-def tray_icon_dnd(tray_icon, item):
+def tray_icon_dnd(tray_icon, item_dnd):
 	global on_dnd
 	on_dnd = not item_dnd.checked 
 
