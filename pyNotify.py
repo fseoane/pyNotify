@@ -70,12 +70,7 @@ if __name__ == "__main__":
 	SCRIPT_PATH = getcwd()
 	if (SCRIPT_PATH[0]!='/'):
 		PATH_SEPARATOR = '\\'
-  
-	# get the version of the app from file pyNotify.ver
-	pyNotify_version ="??"
-	with open(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.ver', 'rb') as f:
-		pyNotify_version = f.read().decode('utf-8')
-
+  	
 	progname = argv[0]
 	processName = progname[progname.rfind(PATH_SEPARATOR)+1:]
 		
@@ -86,6 +81,13 @@ if __name__ == "__main__":
       	)
 		exit(1) 
 
+	# get the version of the app from file pyNotify.ver
+	if checkIfFileExists(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.ver'):
+		with open(SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.ver', 'rb') as f:
+			pyNotify_version = f.read().decode('utf-8')
+	else:
+		pyNotify_version ="??"
+	
 	try:   
 		configFile=""
 		if (PATH_SEPARATOR == '/'):
@@ -93,7 +95,16 @@ if __name__ == "__main__":
 		else:
 			configFile=SCRIPT_PATH+PATH_SEPARATOR+"pyNotify.conf"
 
-		print ("Reading config from: {}".format(configFile))
+		if not checkIfFileExists(configFile):
+			osNotify(
+				"pyNotify ERROR",
+				"{} config file does not exist.".format(configFile)
+			)
+			print ("ERROR: Configuration file {} not found".format(conf_tray_icon))
+			exit(1) 
+		else:
+			print ("Reading config from: {}".format(configFile))
+			
 		config = ConfigParser()
 		if not (config.read(configFile)):
 			osNotify(
