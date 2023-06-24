@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0.5.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
+echo "0.6.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
 
 sudo apt install python3.11-venv -y
 sudo apt install python3-pip -y
