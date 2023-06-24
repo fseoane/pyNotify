@@ -6,6 +6,6 @@ source .env/bin/activate
 
 python -m pip install --requirement requirements.req 
 
-pyinstaller --onefile --windowed pyNotify.py
+pyinstaller --onefile --windowed --icon notification.svg --upx-dir /usr/bin/ pyNotify.py
 
 deactivate
