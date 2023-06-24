@@ -77,7 +77,6 @@ def tray_icon_quit(tray_icon, item):
 		runner.close()
 		exit(0)
 
-
 if __name__ == "__main__":
 	# global runner
 	# global on_mute
