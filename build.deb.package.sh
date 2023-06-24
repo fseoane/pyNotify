@@ -12,3 +12,4 @@ cp dist/pyNotify.conf DEB.pyNotify.deb/opt/pyNotify/
 cp dist/pyNotify.conf DEB.pyNotify.deb/etc/
 
 dpkg-deb --build DEB.pyNotify.deb
+mv DEB.pyNotify.deb pyNotify.deb
