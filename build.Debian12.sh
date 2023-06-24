@@ -11,10 +11,10 @@ sudo apt install libgirepository1.0-dev -y
 sudo apt install libappindicator3-dev -y
 
 mkdir -p .env 
-python3.11 -m venv .env
+python3 -m venv .env
 . ./.env/bin/activate
 
-python3.11 -m pip install -r requirements.req
+python3 -m pip install -r requirements.req
 
 pyinstaller --onefile --windowed pyNotify.py
 
