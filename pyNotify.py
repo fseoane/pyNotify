@@ -174,8 +174,8 @@ if __name__ == "__main__":
 
 		tray_icon = Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
 			menu=Menu(
-				MenuItem("Silent mode (no sound)", tray_icon_mute, checked=lambda item: on_mute),
-				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item: on_dnd),
+				MenuItem("Silent mode (no sound)", tray_icon_mute, checked=lambda item_mute: on_mute),
+				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item_dnd: on_dnd),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("About",
 					Menu(
@@ -202,5 +202,10 @@ if __name__ == "__main__":
 		with Runner() as runner:
 			print("...starting loop")
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,on_mute,on_dnd))
+	
+	except Exception as error:
+		# handle the exception
+		print("An exception occurred:", error)
+	
 	finally:
 		exit(0) 
