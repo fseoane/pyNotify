@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "0.5.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
+
 sudo apt install python3.11-venv -y
 sudo apt install python3-pip -y
 # sudo apt install virtualenv -y
@@ -19,6 +21,7 @@ pyinstaller --onefile --windowed pyNotify.py
 cp notification.ogg dist
 cp notification.svg dist
 cp notification.png dist
+cp pyNotify.ver dist
 cp pyNotify.desktop dist
 cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf

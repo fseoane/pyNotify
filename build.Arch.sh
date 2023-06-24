@@ -1,6 +1,9 @@
 #!/bin/bash
 
-mkdir .env 
+echo "0.5.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
+
+
+mkdir -p .env 
 python -m venv .env
 source .env/bin/activate
 
@@ -11,6 +14,7 @@ pyinstaller --onefile --windowed pyNotify.py
 cp notification.ogg dist
 cp notification.svg dist
 cp notification.png dist
+cp pyNotify.ver dist
 cp pyNotify.ver dist
 cp pyNotify.desktop dist
 cp install.binaries.sh dist/install.sh
