@@ -37,22 +37,23 @@ def play_ogg(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
-	global EXIT_REQUESTED
-	async_gotify = AsyncGotify(
-		base_url=conf_gotify_url,
-		client_token=conf_client_token,
-	)
-	print("...listening")
-	if (tray_icon.HAS_NOTIFICATION):
-		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
-  
-	async for msg in async_gotify.stream():
-		play_ogg(conf_notification_sound)
+async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,on_mute,on_dnd):
+	if not on_dnd:
+		async_gotify = AsyncGotify(
+			base_url=conf_gotify_url,
+			client_token=conf_client_token,
+		)
+		print("...listening")
 		if (tray_icon.HAS_NOTIFICATION):
-			tray_icon.notify(message=msg["message"],title=msg["title"])
-		else:
-			osNotify(msg["title"],msg["message"],"notification")
+			tray_icon.notify(message="...is ready and listening",title="pyNotify....")
+	
+		async for msg in async_gotify.stream():
+			if on_mute:
+				play_ogg(conf_notification_sound)
+			if (tray_icon.HAS_NOTIFICATION):
+				tray_icon.notify(message=msg["message"],title=msg["title"])
+			else:
+				osNotify(msg["title"],msg["message"],"notification")
 
 
 def tray_icon_mute(tray_icon, item):
@@ -74,7 +75,9 @@ def tray_icon_quit(tray_icon, item):
 
 
 if __name__ == "__main__":
-	global runner
+	# global runner
+	# global on_mute
+	# global on_dnd
 
 	PATH_SEPARATOR = '/'
 	SCRIPT_PATH = getcwd()
@@ -194,6 +197,6 @@ if __name__ == "__main__":
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
-			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,on_mute,on_dnd))
 	finally:
 		exit(0) 
