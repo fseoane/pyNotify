@@ -37,21 +37,23 @@ def play_ogg(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,on_mute,on_dnd):
-	print(on_mute)
-	print(on_dnd)
-	if not on_dnd:
-		async_gotify = AsyncGotify(
-			base_url=conf_gotify_url,
-			client_token=conf_client_token,
-		)
-		print("...listening")
-		if (tray_icon.HAS_NOTIFICATION):
-			tray_icon.notify(message="...is ready and listening",title="pyNotify....")
+async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
+	global on_mute
+	global on_dnd 
 	
-		async for msg in async_gotify.stream():
-			if on_mute:
-				play_ogg(conf_notification_sound)
+	async_gotify = AsyncGotify(
+		base_url=conf_gotify_url,
+		client_token=conf_client_token,
+	)
+	
+	print("...listening")
+	if (tray_icon.HAS_NOTIFICATION):
+		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
+
+	async for msg in async_gotify.stream():
+		if not on_mute:
+			play_ogg(conf_notification_sound)
+		if not on_dnd:
 			if (tray_icon.HAS_NOTIFICATION):
 				tray_icon.notify(message=msg["message"],title=msg["title"])
 			else:
@@ -203,7 +205,7 @@ if __name__ == "__main__":
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
-			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound,on_mute,on_dnd))
+			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 	
 	except Exception as error:
 		# handle the exception
