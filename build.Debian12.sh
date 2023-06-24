@@ -12,7 +12,7 @@ sudo apt install libappindicator3-dev -y
 
 mkdir -p .env 
 python3.11 -m venv .env
-source .env/bin/activate
+. ./.env/bin/activate
 
 python3.11 -m pip install -r requirements.req
 
