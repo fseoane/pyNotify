@@ -7,9 +7,9 @@ sudo cp pyNotify.ver /opt/pyNotify/
 sudo cp pyNotify.desktop /opt/pyNotify/
 sudo cp notification.* /opt/pyNotify/
 
-mkdir -p /usr/share/licenses/pyNotify
+sudo mkdir -p /usr/share/licenses/pyNotify
 sudo cp LICENSE /usr/share/licenses/pyNotify/LICENSE
-mkdir -p /usr/share/doc/pyNotify
+sudo mkdir -p /usr/share/doc/pyNotify
 sudo cp README.md /usr/share/doc/pyNotify/README.md
 
 read -r -p "Install default configuration file (pyNotify.conf)? [y/N] " response
