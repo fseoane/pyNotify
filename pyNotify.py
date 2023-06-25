@@ -11,6 +11,7 @@ from PIL import Image
 from psutil import process_iter
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
+from webbrowser import open_new_tab
 
 	
 def checkIfFileExists(fileFullPathName):
@@ -68,6 +69,9 @@ def tray_icon_mute(tray_icon, item_mute):
 def tray_icon_dnd(tray_icon, item_dnd):
 	global on_dnd
 	on_dnd = not item_dnd.checked 
+ 
+def tray_icon_gotify(tray_icon, item_url):
+	open_new_tab(item_url, new = 2)
 
 
 def tray_icon_quit(tray_icon, item):
@@ -180,6 +184,8 @@ if __name__ == "__main__":
 				MenuItem("Silent mode (no sound)", tray_icon_mute, checked=lambda item_mute: on_mute),
 				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item_dnd: on_dnd),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+				MenuItem("Open Gotify", tray_icon_gotify),
+    			MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("About",
 					Menu(
 						MenuItem(" pyNotify {}".format(pyNotify_version),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
