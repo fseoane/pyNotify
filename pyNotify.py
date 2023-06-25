@@ -74,7 +74,6 @@ def tray_icon_gotify(tray_icon, item):
 	global on_url
 	webbrowser.open(on_url, new = 2)
 
-
 def tray_icon_quit(tray_icon, item):
 	global runner
 	if str(item) == "Quit":
