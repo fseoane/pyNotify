@@ -11,7 +11,7 @@ from PIL import Image
 from psutil import process_iter
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
-from webbrowser import open_new_tab
+import webbrowser
 
 	
 def checkIfFileExists(fileFullPathName):
@@ -72,7 +72,7 @@ def tray_icon_dnd(tray_icon, item_dnd):
  
 def tray_icon_gotify(tray_icon, item):
 	global on_url
-	open_new_tab(on_url, new = 2)
+	webbrowser.open(on_url, new = 2)
 
 
 def tray_icon_quit(tray_icon, item):
