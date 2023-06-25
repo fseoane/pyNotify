@@ -70,8 +70,9 @@ def tray_icon_dnd(tray_icon, item_dnd):
 	global on_dnd
 	on_dnd = not item_dnd.checked 
  
-def tray_icon_gotify(tray_icon, item_url):
-	open_new_tab(item_url, new = 2)
+def tray_icon_gotify(tray_icon, item):
+	global on_url
+	open_new_tab(on_url, new = 2)
 
 
 def tray_icon_quit(tray_icon, item):
@@ -82,12 +83,9 @@ def tray_icon_quit(tray_icon, item):
 		exit(0)
 
 if __name__ == "__main__":
-	# global runner
-	# global on_mute
-	# global on_dnd
-
 	on_mute = False
 	on_dnd = False
+    
 
 	PATH_SEPARATOR = '/'
 	SCRIPT_PATH = getcwd()
@@ -148,6 +146,7 @@ if __name__ == "__main__":
 			print ("ERROR: Configure your values at {}".format(configFile))
 			exit(1) 
 		else:
+			on_url=conf_gotify_url
 			print ("   .- Gotify URL {} ".format(conf_gotify_url))
 		
 		conf_client_token=config['config']['client_token']
