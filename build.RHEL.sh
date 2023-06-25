@@ -22,8 +22,8 @@ cp pyNotify.ver dist
 cp pyNotify.desktop dist
 cp install.binaries.sh dist/install.sh
 cp pyNotify.conf dist/pyNotify.conf
-cp LICENSE dist/pyNotify.conf
-cp README.MD dist/pyNotify.conf
+cp LICENSE dist
+cp README.md dist
 
 deactivate
 rm -rf .env
