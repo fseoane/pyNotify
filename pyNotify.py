@@ -5,7 +5,8 @@ from configparser import ConfigParser
 from asyncio import Runner
 from threading import Thread
 from gotify import AsyncGotify  
-from ntfpy import NTFYClient
+#from ntfpy import NTFYClient
+#from ntfpy import NTFYUser
 from subprocess import run as sp_run
 from pystray import Icon, Menu, MenuItem
 from PIL import Image
@@ -47,7 +48,9 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		base_url=conf_gotify_url,
 		client_token=conf_client_token,
 	)
-	#import ntfpy
+	
+	## Ref: https://ntfpy.nevdocs.xyz/
+ 	#import ntfpy
  	#import asyncio
 	#async def main():
 	#	ntfyClient = ntfpy.NTFYClient(ntfpy.NTFYServer("https://ntfy.sh"), "test", ntfpy.NTFYUser("user", "pass"))
