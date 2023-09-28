@@ -6,7 +6,8 @@ sudo apt install python3.11-venv -y
 sudo apt install python3-pip -y
 # sudo apt install virtualenv -y
 
-sudo apt install libcairo2-dev libjpeg-dev libgif-dev -y
+sudo apt install libcairo2-dev -y
+#sudo apt install libjpeg-dev libgif-dev -y
 sudo apt install libgirepository1.0-dev -y
 sudo apt install libappindicator3-dev -y
 
