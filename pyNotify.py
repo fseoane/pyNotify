@@ -54,7 +54,7 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
  	#import asyncio
 	#async def main():
 	#	ntfyClient = ntfpy.NTFYClient(ntfpy.NTFYServer("https://ntfy.sh"), "test", ntfpy.NTFYUser("user", "pass"))
-	#	await ntfyClient.subscribe()
+	#	await ntfyClient.subscribe(tray_icon.notify(message,title))
 	#if __name__ == "__main__":
  	# 	asyncio.run(main())
  
