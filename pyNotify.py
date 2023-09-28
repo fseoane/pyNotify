@@ -5,6 +5,7 @@ from configparser import ConfigParser
 from asyncio import Runner
 from threading import Thread
 from gotify import AsyncGotify  
+from ntfpy import NTFYClient
 from subprocess import run as sp_run
 from pystray import Icon, Menu, MenuItem
 from PIL import Image
@@ -46,7 +47,14 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 		base_url=conf_gotify_url,
 		client_token=conf_client_token,
 	)
-	
+	#import ntfpy
+ 	#import asyncio
+	#async def main():
+	#	ntfyClient = ntfpy.NTFYClient(ntfpy.NTFYServer("https://ntfy.sh"), "test", ntfpy.NTFYUser("user", "pass"))
+	#	await ntfyClient.subscribe()
+	#if __name__ == "__main__":
+ 	# 	asyncio.run(main())
+ 
 	print("...listening")
 	if (tray_icon.HAS_NOTIFICATION):
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
