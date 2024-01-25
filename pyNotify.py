@@ -50,7 +50,6 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntf
 	await ntfyTask
 	await gotifyTask
 
- 
 async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global on_mute
 	global on_dnd 
