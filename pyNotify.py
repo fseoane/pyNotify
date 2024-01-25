@@ -2,6 +2,8 @@
 from os import path,getcwd,environ
 from sys import argv, exit
 import time
+import requests
+import json
 from configparser import ConfigParser
 from asyncio import Runner
 from threading import Thread
@@ -41,7 +43,7 @@ def play_ogg(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
+async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global on_mute
 	global on_dnd 
 	
@@ -72,6 +74,24 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_not
 			else:
 				osNotify(msg["title"],msg["message"],"notification")
 
+async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
+	global on_mute
+	global on_dnd 
+	
+	resp = requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True)
+	for line in resp.iter_lines():
+		if line:
+			data = json.loads(line)
+			if (data["event"]=="message"):
+				if not on_mute:
+					play_ogg(conf_notification_sound)
+				if not on_dnd:
+					if (tray_icon.HAS_NOTIFICATION):
+						tray_icon.notify(message=data["message"],title=data["topics"]+"/"+data["title"])
+					else:
+						osNotify(data["title"],data["topics"]+"/"+data["message"],"notification")
+
+
 
 def tray_icon_mute(tray_icon, item_mute):
 	global on_mute
@@ -83,8 +103,12 @@ def tray_icon_dnd(tray_icon, item_dnd):
 	on_dnd = not item_dnd.checked 
  
 def tray_icon_gotify(tray_icon, item):
-	global on_url
-	webbrowser.open(on_url, new = 2)
+	global on_gotify_url
+	webbrowser.open(on_gotify_url, new = 2)
+ 
+def tray_icon_ntfy(tray_icon, item):
+	global on_ntfy_url
+	webbrowser.open(on_ntfy_url, new = 2)
 
 def tray_icon_quit(tray_icon, item):
 	global runner
@@ -148,7 +172,7 @@ if __name__ == "__main__":
 		else:
 			print ("...config file {} in use".format(configFile))
 		
-		conf_gotify_url=config['config']['gotify_url']
+		conf_gotify_url=config['gotify']['gotify_url']
 		if (conf_gotify_url=="https://gotify-host:port"):
 			osNotify(
 					"pyNotify ERROR",
@@ -157,11 +181,26 @@ if __name__ == "__main__":
 			print ("ERROR: Configure your values at {}".format(configFile))
 			exit(1) 
 		else:
-			on_url=conf_gotify_url
+			on_gotify_url=conf_gotify_url
 			print ("   .- Gotify URL {} ".format(conf_gotify_url))
+
+		conf_client_token=config['gotify']['client_token']
+		print ("   .- Gotify client token {} ".format(conf_client_token))
+
+		conf_ntfy_url=config['ntfy']['ntfy_url']
+		if (conf_ntfy_url=="https://ntfy-host:port"):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			on_ntfy_url=conf_ntfy_url
+			print ("   .- Ntfy URL {} ".format(conf_ntfy_url))
 		
-		conf_client_token=config['config']['client_token']
-		print ("   .- Token {} ".format(conf_client_token))
+		conf_ntfy_topics=config['ntfy']['ntfy_topics']
+		print ("   .- Ntfy topics {} ".format(conf_ntfy_topics))
 		
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
 		if not checkIfFileExists(conf_tray_icon):
@@ -195,6 +234,8 @@ if __name__ == "__main__":
 				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item_dnd: on_dnd),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("Open Gotify", tray_icon_gotify),
+				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+				MenuItem("Open Ntfy", tray_icon_gotify),
     			MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("About",
 					Menu(
@@ -202,9 +243,11 @@ if __name__ == "__main__":
 						MenuItem(' Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(' -Jun 2023-',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Config:        {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Gotify Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Gotify Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Ntfy Server:   {}".format(conf_ntfy_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Ntfy Topics:   {}".format(conf_ntfy_topics),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 					)
 				),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
@@ -226,8 +269,9 @@ if __name__ == "__main__":
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
-			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
-	
+			runner.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+			runner.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
+   
 	except Exception as error:
 		# handle the exception
 		print("An exception occurred:", error)
