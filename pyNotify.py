@@ -265,10 +265,10 @@ if __name__ == "__main__":
 
 		# Delay 3 minutes to ensure network is ready
 		print("...delayed start (3 minutes) to ensure network is ready")
-		time.sleep(180)
+		#time.sleep(180)
 
 		# Run the gotify listener asynchronously in a second thread
-		with Runner() as runnerGotify, Runner as runnerNtfy:
+		with Runner() as runnerGotify, Runner() as runnerNtfy:
 			print("...starting loop")
 			runnerGotify.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 			runnerNtfy.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
