@@ -62,7 +62,7 @@ async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,c
 	#if __name__ == "__main__":
  	# 	asyncio.run(main())
  
-	print("...listening")
+	print("...listening at {}".format(conf_gotify_url))
 	if (tray_icon.HAS_NOTIFICATION):
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
 
@@ -78,9 +78,10 @@ async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,c
 async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
 	global on_mute
 	global on_dnd 
-	
-	async for msg in requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True):
-		for line in msg.iter_lines():
+ 
+	print("...listening at {}".format(conf_ntfy_url))
+	async for msgN in requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True):
+		for line in msgN.iter_lines():
 			if line:
 				data = json.loads(line)
 				if (data["event"]=="message"):
@@ -267,10 +268,10 @@ if __name__ == "__main__":
 		time.sleep(180)
 
 		# Run the gotify listener asynchronously in a second thread
-		with Runner() as runnerGotify, Runner() as runnerNtfy:
+		with Runner() as runner:
 			print("...starting loop")
-			#runnerGotify.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
-			runnerNtfy.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
+			runner.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+			runner.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
 
 	except Exception as error:
 		# handle the exception
