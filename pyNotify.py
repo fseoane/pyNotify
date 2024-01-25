@@ -80,7 +80,7 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 	global on_dnd 
  
 	print("...listening at {}".format(conf_ntfy_url))
-	resp = requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True)
+	resp = requests.get("{}/{}/json".format(conf_ntfy_url,conf_ntfy_topics), stream=True)
 	for line in resp.iter_lines():
 		if line:
 			data = json.loads(line)
