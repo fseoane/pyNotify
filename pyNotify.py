@@ -264,7 +264,7 @@ if __name__ == "__main__":
 
 		# Delay 3 minutes to ensure network is ready
 		print("...delayed start (3 minutes) to ensure network is ready")
-		#time.sleep(180)
+		time.sleep(180)
 
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runnerGotify, Runner() as runnerNtfy:
