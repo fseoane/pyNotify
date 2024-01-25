@@ -6,6 +6,7 @@ import requests
 import json
 from configparser import ConfigParser
 from asyncio import Runner
+import asyncio
 from threading import Thread
 from gotify import AsyncGotify  
 #from ntfpy import NTFYClient
@@ -43,7 +44,12 @@ def play_ogg(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
-
+async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
+	gotifyTask = asyncio.create_task(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+	ntfyTask = asyncio.create_task(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
+	await gotifyTask
+	await ntfyTask
+ 
 async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global on_mute
 	global on_dnd 
@@ -270,7 +276,8 @@ if __name__ == "__main__":
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
-			runner.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
+			#runner.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 			#runner.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
 
 	except Exception as error:
