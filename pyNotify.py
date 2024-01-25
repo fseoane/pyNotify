@@ -80,18 +80,18 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 	global on_dnd 
  
 	print("...listening at {}".format(conf_ntfy_url))
-	async for msgN in requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True):
-		for line in msgN.iter_lines():
-			if line:
-				data = json.loads(line)
-				if (data["event"]=="message"):
-					if not on_mute:
-						play_ogg(conf_notification_sound)
-					if not on_dnd:
-						if (tray_icon.HAS_NOTIFICATION):
-							tray_icon.notify(message=data["message"],title=data["topics"]+"/"+data["title"])
-						else:
-							osNotify(data["title"],data["topics"]+"/"+data["message"],"notification")
+	resp = requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True)
+	for line in resp.iter_lines():
+		if line:
+			data = json.loads(line)
+			if (data["event"]=="message"):
+				if not on_mute:
+					play_ogg(conf_notification_sound)
+				if not on_dnd:
+					if (tray_icon.HAS_NOTIFICATION):
+						tray_icon.notify(message=data["message"],title=data["topics"]+"/"+data["title"])
+					else:
+						osNotify(data["title"],data["topics"]+"/"+data["message"],"notification")
 
 
 def tray_icon_mute(tray_icon, item_mute):
