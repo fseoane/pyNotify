@@ -1,6 +1,7 @@
 
 from os import path,getcwd,environ
 from sys import argv, exit
+import time
 from configparser import ConfigParser
 from asyncio import Runner
 from threading import Thread
@@ -212,7 +213,10 @@ if __name__ == "__main__":
 		)
 		print("...built tray menu")
 
-		# Run the icon mainloop in first thread
+		# Delay to ensure network is ready
+		time.sleep(120)
+  
+  		# Run the icon mainloop in first thread
 		Thread(target=tray_icon.run).start()
 		print("...placed icon in tray")
 
