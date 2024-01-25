@@ -89,9 +89,9 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 					play_ogg(conf_notification_sound)
 				if not on_dnd:
 					if (tray_icon.HAS_NOTIFICATION):
-						tray_icon.notify(message=data["message"],title=data["topics"]+"/"+data["title"])
+						tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
 					else:
-						osNotify(data["title"],data["topics"]+"/"+data["message"],"notification")
+						osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
 
 
 def tray_icon_mute(tray_icon, item_mute):
