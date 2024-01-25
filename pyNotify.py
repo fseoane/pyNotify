@@ -269,7 +269,7 @@ if __name__ == "__main__":
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runnerGotify, Runner() as runnerNtfy:
 			print("...starting loop")
-			runnerGotify.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+			#runnerGotify.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 			runnerNtfy.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
 
 	except Exception as error:
