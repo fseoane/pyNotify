@@ -1,0 +1,9 @@
+gotify[stream]
+ntfpy
+pyinstaller
+pygame
+pygobject
+asyncio
+pystray
+pillow
+psutil
