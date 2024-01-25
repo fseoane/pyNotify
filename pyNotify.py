@@ -74,18 +74,18 @@ async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntf
 			else:
 				osNotify(msg["title"],msg["message"],"notification")
 
-	resp = requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True)
-	for line in resp.iter_lines():
-		if line:
-			data = json.loads(line)
-			if (data["event"]=="message"):
-				if not on_mute:
-					play_ogg(conf_notification_sound)
-				if not on_dnd:
-					if (tray_icon.HAS_NOTIFICATION):
-						tray_icon.notify(message=data["message"],title=data["topics"]+"/"+data["title"])
-					else:
-						osNotify(data["title"],data["topics"]+"/"+data["message"],"notification")
+	async for msg in requests.get(conf_ntfy_url+"/"+conf_ntfy_topics+"/json", stream=True):
+		for line in msg.iter_lines():
+			if line:
+				data = json.loads(line)
+				if (data["event"]=="message"):
+					if not on_mute:
+						play_ogg(conf_notification_sound)
+					if not on_dnd:
+						if (tray_icon.HAS_NOTIFICATION):
+							tray_icon.notify(message=data["message"],title=data["topics"]+"/"+data["title"])
+						else:
+							osNotify(data["title"],data["topics"]+"/"+data["message"],"notification")
 
 async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global on_mute
