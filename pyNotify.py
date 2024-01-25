@@ -47,8 +47,9 @@ def play_ogg(file_path):
 async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
 	gotifyTask = asyncio.create_task(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 	ntfyTask = asyncio.create_task(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
-	await gotifyTask
 	await ntfyTask
+	await gotifyTask
+
  
 async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global on_mute
