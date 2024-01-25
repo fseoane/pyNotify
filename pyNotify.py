@@ -213,13 +213,15 @@ if __name__ == "__main__":
 		)
 		print("...built tray menu")
 
-		# Delay 3 minutes to ensure network is ready
-		print("...delayed start (3 minutes) to ensure network is ready")
-		time.sleep(180)
+
   
   		# Run the icon mainloop in first thread
 		Thread(target=tray_icon.run).start()
 		print("...placed icon in tray")
+
+		# Delay 3 minutes to ensure network is ready
+		print("...delayed start (3 minutes) to ensure network is ready")
+		time.sleep(180)
 
 		# Run the gotify listener asynchronously in a second thread
 		with Runner() as runner:
