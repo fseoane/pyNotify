@@ -28,7 +28,7 @@ def checkIfFileExists(fileFullPathName):
 
 def checkIfInternetIsAvailable():
     try:
-        request.urlopen('https://cisco.com', timeout=1)
+        request.urlopen('https://cisco.com', timeout=3)
         return True
     except request.URLError as err: 
         return False
