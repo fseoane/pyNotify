@@ -73,6 +73,7 @@ async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,c
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
 
 	async for msg in async_gotify.stream():
+		print("[!] new message at Gotify {} : {}".format(msg["title"],msg["message"]))
 		if not on_mute:
 			play_ogg(conf_notification_sound)
 		if not on_dnd:
@@ -91,6 +92,7 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 		if line:
 			data = json.loads(line)
 			if (data["event"]=="message"):
+				print("[!] new message at Ntfy {}/{} : {}".format(data["topic"],data["title"],data["message"]))
 				if not on_mute:
 					play_ogg(conf_notification_sound)
 				if not on_dnd:
@@ -273,7 +275,7 @@ if __name__ == "__main__":
 		print("...delayed start (3 minutes) to ensure network is ready")
 		time.sleep(180)
 
-		# Run the gotify listener asynchronously in a second thread
+		# Run the listeners asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
