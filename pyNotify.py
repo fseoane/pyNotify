@@ -14,6 +14,7 @@ from gotify import AsyncGotify
 #from ntfpy import NTFYUser
 from subprocess import run as sp_run
 from pystray import Icon, Menu, MenuItem
+from urllib import request
 from PIL import Image
 from psutil import process_iter
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
