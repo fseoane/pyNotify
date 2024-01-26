@@ -92,10 +92,6 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 
 
 async def log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
-	# gotifyTask = asyncio.create_task(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_notification_sound))
-	# ntfyTask = asyncio.create_task(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
-	# await gotifyTask
-	# await ntfyTask
 	await asyncio.gather(
 		log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound),
 		log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound),
@@ -212,7 +208,7 @@ if __name__ == "__main__":
 			print ("ERROR: Configure your values at {}".format(configFile))
 			exit(1) 
 		else:
-			print ("   .- NGotify sound {} ".format(conf_gotify_sound))
+			print ("   .- Gotify sound {} ".format(conf_gotify_sound))
 
 		conf_ntfy_url=config['ntfy']['ntfy_url']
 		if (conf_ntfy_url=="https://ntfy-host:port"):
@@ -300,14 +296,13 @@ if __name__ == "__main__":
 
 		# Delay 3 minutes to ensure network is ready
 		print("...delayed start (3 minutes) to ensure network is ready")
-		#time.sleep(180)
+		time.sleep(180)
 
 		# Run the listeners asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound))
-			#runner.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_notification_sound))
-			#runner.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
+
    
 	except Exception as error:
 		# handle the exception
