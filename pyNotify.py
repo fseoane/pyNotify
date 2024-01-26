@@ -76,8 +76,9 @@ def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_no
 	#for msg in async_gotify.stream():
 #	resp = requests.get("{}/stream?token={}".format(conf_gotify_url,conf_client_token), headers={'accept': 'application/json'}, stream=True)
 	resp = requests.get("{}/stream".format(conf_gotify_url), headers={'accept': 'application/json','X-Gotify-Key': '{}'.format(conf_client_token)}, stream=True)
-	print(resp)
+	
 	for line in resp.iter_lines():
+		print(line)
 		data = json.loads(line)
 		if (data):
 			print("[!] new message at Gotify {} : {}".format(data["title"],data["message"]))
