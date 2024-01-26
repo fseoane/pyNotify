@@ -281,7 +281,8 @@ if __name__ == "__main__":
 			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
 			#runner.run(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
 			#runner.run(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
-
+			runner.close()
+   
 	except Exception as error:
 		# handle the exception
 		print("An exception occurred:", error)
