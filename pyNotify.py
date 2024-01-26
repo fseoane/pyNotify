@@ -55,10 +55,10 @@ def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_no
 	global on_mute
 	global on_dnd 
 	
-	async_gotify = AsyncGotify(
-		base_url=conf_gotify_url,
-		client_token=conf_client_token,
-	)
+	# async_gotify = AsyncGotify(
+	# 	base_url=conf_gotify_url,
+	# 	client_token=conf_client_token,
+	# )
 	
 	## Ref: https://ntfpy.nevdocs.xyz/
  	#import ntfpy
