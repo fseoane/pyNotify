@@ -304,6 +304,7 @@ if __name__ == "__main__":
 
 		# Delay 3 minutes to ensure network is ready
 		print("...delayed start to ensure network is ready")
+		print(checkIfInternetIsAvailable())
 		while not checkIfInternetIsAvailable():
 			print(".", end="")
 			time.sleep(10)
