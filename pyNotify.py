@@ -253,7 +253,7 @@ if __name__ == "__main__":
 			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
 			exit(1) 
 		else:
-			print ("   .- Icon {} ".format(conf_tray_icon))
+			print ("   .- App tray icon {} ".format(conf_tray_icon))
 		
 		
 		pyNotify_icon=Image.open(conf_tray_icon) 
