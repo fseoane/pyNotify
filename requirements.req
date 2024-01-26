@@ -4,6 +4,7 @@ pyinstaller
 pygame
 pygobject
 asyncio
+aiohttp
 pystray
 pillow
 psutil
