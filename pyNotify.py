@@ -84,10 +84,11 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 					if not on_mute:
 						play_ogg(conf_ntfy_sound)
 					if not on_dnd:
-						if (tray_icon.HAS_NOTIFICATION):
-							tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
-						else:
-							osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
+						if (data["topic"] and data["title"] and data["message"]):
+							if (tray_icon.HAS_NOTIFICATION):
+								tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
+							else:
+								osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
 
 
 async def log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
