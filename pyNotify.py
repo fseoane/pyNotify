@@ -7,6 +7,7 @@ import json
 from configparser import ConfigParser
 from asyncio import Runner
 import asyncio
+import aiohttp
 from threading import Thread
 from gotify import AsyncGotify  
 #from ntfpy import NTFYClient
@@ -44,71 +45,62 @@ def play_ogg(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
-	gotifyTask = asyncio.create_task(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
-	ntfyTask = asyncio.create_task(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
-	await gotifyTask
-	await ntfyTask
 
 
-def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
+async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
 	global on_mute
 	global on_dnd 
 	
-	# async_gotify = AsyncGotify(
-	# 	base_url=conf_gotify_url,
-	# 	client_token=conf_client_token,
-	# )
+	async_gotify = AsyncGotify(
+		base_url=conf_gotify_url,
+		client_token=conf_client_token,
+	)
 	
-	## Ref: https://ntfpy.nevdocs.xyz/
- 	#import ntfpy
- 	#import asyncio
-	#async def main():
-	#	ntfyClient = ntfpy.NTFYClient(ntfpy.NTFYServer("https://ntfy.sh"), "test", ntfpy.NTFYUser("user", "pass"))
-	#	await ntfyClient.subscribe(tray_icon.notify(message,title))
-	#if __name__ == "__main__":
- 	# 	asyncio.run(main())
- 
 	print("...listening to Gotify at {}".format(conf_gotify_url))
 	if (tray_icon.HAS_NOTIFICATION):
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
 
-	#for msg in async_gotify.stream():
-	resp = requests.get("{}/stream?token={}".format(conf_gotify_url.replace("https","http"),conf_client_token), headers={'accept': 'application/json'}, stream=True)
-	#resp = requests.get("{}/stream".format(conf_gotify_url), headers={'accept': 'application/json','X-Gotify-Key': '{}'.format(conf_client_token)}, stream=True)
-	
-	for line in resp.iter_lines():
-		print(line)
-		data = json.loads(line)
-		if (data):
-			print("[!] new message at Gotify {} : {}".format(data["title"],data["message"]))
-			if not on_mute:
-				play_ogg(conf_notification_sound)
-			if not on_dnd:
-				if (tray_icon.HAS_NOTIFICATION):
-					tray_icon.notify(message=data["message"],title=data["title"])
-				else:
-					osNotify(data["title"],data["message"],"notification")
+	async for msg in async_gotify.stream():
+		print("[!] new message at Gotify {} : {}".format(msg["title"],msg["message"]))
 
-def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
+		if not on_mute:
+			play_ogg(conf_notification_sound)
+		if not on_dnd:
+			if (tray_icon.HAS_NOTIFICATION):
+				tray_icon.notify(message=msg["message"],title=msg["title"])
+			else:
+				osNotify(msg["title"],msg["message"],"notification")
+
+async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
 	global on_mute
 	global on_dnd 
  
 	print("...listening to Ntfy at {}".format(conf_ntfy_url))
-	resp = requests.get("{}/{}/json".format(conf_ntfy_url,conf_ntfy_topics), stream=True)
-	for line in resp.iter_lines():
-		if line:
-			data = json.loads(line)
-			if (data["event"]=="message"):
-				print("[!] new message at Ntfy {}/{} : {}".format(data["topic"],data["title"],data["message"]))
-				if not on_mute:
-					play_ogg(conf_notification_sound)
-				if not on_dnd:
-					if (tray_icon.HAS_NOTIFICATION):
-						tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
-					else:
-						osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
+ 
+	async with aiohttp.request('get', "{}/{}/json".format(conf_ntfy_url,conf_ntfy_topics)) as resp:
+		async for line in resp.content:
+			if line:
+				data = json.loads(line)
+				if (data["event"]=="message"):
+					print("[!] new message at Ntfy {}/{} : {}".format(data["topic"],data["title"],data["message"]))
+					if not on_mute:
+						play_ogg(conf_notification_sound)
+					if not on_dnd:
+						if (tray_icon.HAS_NOTIFICATION):
+							tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
+						else:
+							osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
 
+
+async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
+	# gotifyTask = asyncio.create_task(log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
+	# ntfyTask = asyncio.create_task(log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound))
+	# await gotifyTask
+	# await ntfyTask
+	await asyncio.gather(
+		log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound)(),
+		log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound)(),
+	)
 
 def tray_icon_mute(tray_icon, item_mute):
 	global on_mute
