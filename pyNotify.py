@@ -76,14 +76,15 @@ def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_no
 	#for msg in async_gotify.stream():
 	resp = requests.get("{}?token={}/stream".format(conf_gotify_url,conf_client_token), stream=True)
 	for line in resp.iter_lines():
-		print("[!] new message at Gotify {} : {}".format(msg["title"],msg["message"]))
+		data = json.loads(line)
+		print("[!] new message at Gotify {} : {}".format(data["title"],data["message"]))
 		if not on_mute:
 			play_ogg(conf_notification_sound)
 		if not on_dnd:
 			if (tray_icon.HAS_NOTIFICATION):
-				tray_icon.notify(message=msg["message"],title=msg["title"])
+				tray_icon.notify(message=data["message"],title=data["title"])
 			else:
-				osNotify(msg["title"],msg["message"],"notification")
+				osNotify(data["title"],data["message"],"notification")
 
 def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_notification_sound):
 	global on_mute
