@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0.6.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
+echo "0.7.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)" > pyNotify.ver
 
 mkdir -p .env 
 python -m venv .env
