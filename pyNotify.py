@@ -74,8 +74,8 @@ def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_no
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
 
 	#for msg in async_gotify.stream():
-#	resp = requests.get("{}/stream?token={}".format(conf_gotify_url,conf_client_token), headers={'accept': 'application/json'}, stream=True)
-	resp = requests.get("{}/stream".format(conf_gotify_url), headers={'accept': 'application/json','X-Gotify-Key': '{}'.format(conf_client_token)}, stream=True)
+	resp = requests.get("{}/stream?token={}".format(conf_gotify_url.replace("https","http"),conf_client_token), headers={'accept': 'application/json'}, stream=True)
+	#resp = requests.get("{}/stream".format(conf_gotify_url), headers={'accept': 'application/json','X-Gotify-Key': '{}'.format(conf_client_token)}, stream=True)
 	
 	for line in resp.iter_lines():
 		print(line)
