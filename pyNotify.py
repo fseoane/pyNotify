@@ -25,6 +25,13 @@ def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
 	return path.isfile(fileFullPathName)
 
+def checkIfInternetIsAvailable():
+    try:
+        request.urlopen('https://cisco.com', timeout=1)
+        return True
+    except request.URLError as err: 
+        return False
+
 def checkIfProcessRunning(processName):
 	# Check if there is any running process that contains the given name processName.
 	countProcesses = 0
@@ -295,8 +302,10 @@ if __name__ == "__main__":
 		print("...placed icon in tray")
 
 		# Delay 3 minutes to ensure network is ready
-		print("...delayed start (3 minutes) to ensure network is ready")
-		time.sleep(180)
+		print("...delayed start to ensure network is ready")
+		while not checkIfInternetIsAvailable():
+			print(".", end="")
+			time.sleep(10)
 
 		# Run the listeners asynchronously in a second thread
 		with Runner() as runner:
