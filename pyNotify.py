@@ -1,6 +1,6 @@
 
 from os import path,getcwd,environ
-#from sys import argv, exit
+from sys import argv, exit
 import sys
 import time
 import json
@@ -310,7 +310,7 @@ if __name__ == "__main__":
 		sys.stdout.write("[%s]" % (" " * 12))
 		sys.stdout.flush()
 		sys.stdout.write("\b" * (12+1)) # return to start of line, after '['
-		while ((not isAvailable) or (counter < 36)):
+		while ((not isAvailable) and (counter < 36)):
 			time.sleep(5)
 			counter += 1
 			isAvailable=checkIfInternetIsAvailable()
