@@ -88,8 +88,8 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 		async for line in resp.content:
 			if line:
 				data = json.loads(line)
-				if (data["event"]=="message"):
-					if (data["topic"] and data["title"] and data["message"]):
+				if (data["event"] and data["topic"] and data["title"] and data["message"]):
+					if (data["event"]=="message"):
 						print("[!] new message at Ntfy {}/{} : {}".format(data["topic"],data["title"],data["message"]))
 						if not on_mute:
 							play_ogg(conf_ntfy_sound)
