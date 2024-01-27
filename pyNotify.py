@@ -1,8 +1,8 @@
 
 from os import path,getcwd,environ
-from sys import argv, exit
+#from sys import argv, exit
+import sys
 import time
-import requests
 import json
 from configparser import ConfigParser
 from asyncio import Runner
@@ -10,27 +10,28 @@ import asyncio
 import aiohttp
 from threading import Thread
 from gotify import AsyncGotify  
-#from ntfpy import NTFYClient
-#from ntfpy import NTFYUser
 from subprocess import run as sp_run
 from pystray import Icon, Menu, MenuItem
-from urllib import request
+import socket
 from PIL import Image
 from psutil import process_iter
+import webbrowser
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
-import webbrowser
+
 
 	
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
 	return path.isfile(fileFullPathName)
 
-def checkIfInternetIsAvailable():
+def checkIfInternetIsAvailable(host="8.8.8.8", port=53, timeout=3):
     try:
-        urllib.request.urlopen('https://cisco.com', timeout=3)
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
         return True
-    except Exception as err: 
+    except socket.error as ex:
+        print(ex)
         return False
 
 def checkIfProcessRunning(processName):
@@ -304,8 +305,18 @@ if __name__ == "__main__":
 
 		# Delay 3 minutes to ensure network is ready
 		print("...delayed start to ensure network is ready")
-		while not checkIfInternetIsAvailable():
-			time.sleep(10)
+		isAvailable=False
+		counter=0
+		sys.stdout.write("[%s]" % (" " * 12))
+		sys.stdout.flush()
+		sys.stdout.write("\b" * (12+1)) # return to start of line, after '['
+		while ((not isAvailable) or (counter < 36)):
+			time.sleep(5)
+			counter += 1
+			isAvailable=checkIfInternetIsAvailable()
+			sys.stdout.write("-")
+			sys.stdout.flush()
+		sys.stdout.write("]\n")
 
 		# Run the listeners asynchronously in a second thread
 		with Runner() as runner:
