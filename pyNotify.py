@@ -30,7 +30,7 @@ def checkIfInternetIsAvailable():
     try:
         request.urlopen('https://cisco.com', timeout=3)
         return True
-    except request.URLError as err: 
+    except Exception as err: 
         return False
 
 def checkIfProcessRunning(processName):
@@ -304,10 +304,7 @@ if __name__ == "__main__":
 
 		# Delay 3 minutes to ensure network is ready
 		print("...delayed start to ensure network is ready")
-		print(checkIfInternetIsAvailable())
 		while not checkIfInternetIsAvailable():
-			print(checkIfInternetIsAvailable())
-			print(".", end="")
 			time.sleep(10)
 
 		# Run the listeners asynchronously in a second thread
