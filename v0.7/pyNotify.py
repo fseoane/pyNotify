@@ -68,15 +68,16 @@ async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
 
 	async for msg in async_gotify.stream():
-		print("[!] new message at Gotify {} : {}".format(msg["title"],msg["message"]))
-
-		if not on_mute:
-			play_ogg(conf_gotify_sound)
-		if not on_dnd:
-			if (tray_icon.HAS_NOTIFICATION):
-				tray_icon.notify(message=msg["message"],title=msg["title"])
-			else:
-				osNotify(msg["title"],msg["message"],"notification")
+		#if (msg["title"] and msg["message"]):
+		if (msg.get("title") and msg.get("message")):
+			print("[!] new message at Gotify {} : {}".format(msg["title"],msg["message"]))
+			if not on_mute:
+				play_ogg(conf_gotify_sound)
+			if not on_dnd:
+				if (tray_icon.HAS_NOTIFICATION):
+					tray_icon.notify(message=msg["message"],title=msg["title"])
+				else:
+					osNotify(msg["title"],msg["message"],"notification")
 
 async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
 	global on_mute
@@ -88,16 +89,20 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 		async for line in resp.content:
 			if line:
 				data = json.loads(line)
-				if (data["event"]=="message"):
-					print("[!] new message at Ntfy {}/{} : {}".format(data["topic"],data["title"],data["message"]))
-					if not on_mute:
-						play_ogg(conf_ntfy_sound)
-					if not on_dnd:
-						if (data["topic"] and data["title"] and data["message"]):
+				if (data.get("event") and data.get("topic") and data.get("message")):
+					if (data["event"]=="message"):
+						if (data.get("title")):
+							titl = "/"+data["title"]
+						else:
+							titl = ""
+						print("[!] new message at Ntfy {}{} : {}".format(data["topic"],titl,data["message"]))
+						if not on_mute:
+							play_ogg(conf_ntfy_sound)
+						if not on_dnd:	
 							if (tray_icon.HAS_NOTIFICATION):
-								tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
+								tray_icon.notify(message=data["message"],title=data["topic"]+titl)
 							else:
-								osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
+								osNotify(data["topic"]+titl,data["message"],"notification")
 
 
 async def log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
