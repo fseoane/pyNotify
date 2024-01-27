@@ -1,25 +1,38 @@
 
 from os import path,getcwd,environ
 from sys import argv, exit
+import sys
 import time
+import json
 from configparser import ConfigParser
 from asyncio import Runner
+import asyncio
+import aiohttp
 from threading import Thread
 from gotify import AsyncGotify  
-#from ntfpy import NTFYClient
-#from ntfpy import NTFYUser
 from subprocess import run as sp_run
 from pystray import Icon, Menu, MenuItem
+import socket
 from PIL import Image
 from psutil import process_iter
+import webbrowser
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
-import webbrowser
+
 
 	
 def checkIfFileExists(fileFullPathName):
 	# Check if the file specified by fileFullPathName exists(true) or not (false).
 	return path.isfile(fileFullPathName)
+
+def checkIfInternetIsAvailable(host="8.8.8.8", port=53, timeout=3):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        print(ex)
+        return False
 
 def checkIfProcessRunning(processName):
 	# Check if there is any running process that contains the given name processName.
@@ -41,37 +54,57 @@ def play_ogg(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound):
+async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound):
 	global on_mute
 	global on_dnd 
 	
 	async_gotify = AsyncGotify(
 		base_url=conf_gotify_url,
-		client_token=conf_client_token,
+		client_token=conf_gotify_client_token,
 	)
 	
-	## Ref: https://ntfpy.nevdocs.xyz/
- 	#import ntfpy
- 	#import asyncio
-	#async def main():
-	#	ntfyClient = ntfpy.NTFYClient(ntfpy.NTFYServer("https://ntfy.sh"), "test", ntfpy.NTFYUser("user", "pass"))
-	#	await ntfyClient.subscribe(tray_icon.notify(message,title))
-	#if __name__ == "__main__":
- 	# 	asyncio.run(main())
- 
-	print("...listening")
+	print("...listening to Gotify at {}".format(conf_gotify_url))
 	if (tray_icon.HAS_NOTIFICATION):
 		tray_icon.notify(message="...is ready and listening",title="pyNotify....")
 
 	async for msg in async_gotify.stream():
+		print("[!] new message at Gotify {} : {}".format(msg["title"],msg["message"]))
+
 		if not on_mute:
-			play_ogg(conf_notification_sound)
+			play_ogg(conf_gotify_sound)
 		if not on_dnd:
 			if (tray_icon.HAS_NOTIFICATION):
 				tray_icon.notify(message=msg["message"],title=msg["title"])
 			else:
 				osNotify(msg["title"],msg["message"],"notification")
 
+async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
+	global on_mute
+	global on_dnd 
+ 
+	print("...listening to Ntfy at {}".format(conf_ntfy_url))
+ 
+	async with aiohttp.request('get', "{}/{}/json".format(conf_ntfy_url,conf_ntfy_topics)) as resp:
+		async for line in resp.content:
+			if line:
+				data = json.loads(line)
+				if (data["event"]=="message"):
+					print("[!] new message at Ntfy {}/{} : {}".format(data["topic"],data["title"],data["message"]))
+					if not on_mute:
+						play_ogg(conf_ntfy_sound)
+					if not on_dnd:
+						if (data["topic"] and data["title"] and data["message"]):
+							if (tray_icon.HAS_NOTIFICATION):
+								tray_icon.notify(message=data["message"],title=data["topic"]+"/"+data["title"])
+							else:
+								osNotify(data["title"],data["topic"]+"/"+data["message"],"notification")
+
+
+async def log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
+	await asyncio.gather(
+		log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound),
+		log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound),
+	)
 
 def tray_icon_mute(tray_icon, item_mute):
 	global on_mute
@@ -83,8 +116,12 @@ def tray_icon_dnd(tray_icon, item_dnd):
 	on_dnd = not item_dnd.checked 
  
 def tray_icon_gotify(tray_icon, item):
-	global on_url
-	webbrowser.open(on_url, new = 2)
+	global on_gotify_url
+	webbrowser.open(on_gotify_url, new = 2)
+ 
+def tray_icon_ntfy(tray_icon, item):
+	global on_ntfy_url
+	webbrowser.open(on_ntfy_url, new = 2)
 
 def tray_icon_quit(tray_icon, item):
 	global runner
@@ -132,7 +169,7 @@ if __name__ == "__main__":
 				"pyNotify ERROR",
 				"{} config file does not exist.".format(configFile)
 			)
-			print ("ERROR: Configuration file {} not found".format(conf_tray_icon))
+			print ("ERROR: Configuration file {} not found".format(configFile))
 			exit(1) 
 		else:
 			print ("Reading config from: {}".format(configFile))
@@ -148,7 +185,7 @@ if __name__ == "__main__":
 		else:
 			print ("...config file {} in use".format(configFile))
 		
-		conf_gotify_url=config['config']['gotify_url']
+		conf_gotify_url=config['gotify']['gotify_url']
 		if (conf_gotify_url=="https://gotify-host:port"):
 			osNotify(
 					"pyNotify ERROR",
@@ -157,11 +194,64 @@ if __name__ == "__main__":
 			print ("ERROR: Configure your values at {}".format(configFile))
 			exit(1) 
 		else:
-			on_url=conf_gotify_url
+			on_gotify_url=conf_gotify_url
 			print ("   .- Gotify URL {} ".format(conf_gotify_url))
+
+		conf_gotify_client_token=config['gotify']['gotify_client_token']
+		if ((conf_gotify_client_token=="") or (conf_gotify_client_token=="GotifyClientToken")):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			print ("   .- Gotify client token {} ".format(conf_gotify_client_token))
+
+		conf_gotify_sound=config['gotify']['gotify_sound']
+		if (conf_gotify_sound==""):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			print ("   .- Gotify sound {} ".format(conf_gotify_sound))
+
+		conf_ntfy_url=config['ntfy']['ntfy_url']
+		if (conf_ntfy_url=="https://ntfy-host:port"):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			on_ntfy_url=conf_ntfy_url
+			print ("   .- Ntfy URL {} ".format(conf_ntfy_url))
 		
-		conf_client_token=config['config']['client_token']
-		print ("   .- Token {} ".format(conf_client_token))
+		conf_ntfy_topics=config['ntfy']['ntfy_topics']
+		if (conf_ntfy_topics==""):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			print ("   .- Ntfy topics {} ".format(conf_ntfy_topics))
+
+		conf_ntfy_sound=config['ntfy']['ntfy_sound']
+		if (conf_ntfy_sound==""):
+			osNotify(
+					"pyNotify ERROR",
+					"Configure {} with your values.".format(configFile)
+				)
+			print ("ERROR: Configure your values at {}".format(configFile))
+			exit(1) 
+		else:
+			print ("   .- Ntfy sound {} ".format(conf_ntfy_sound))
 		
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
 		if not checkIfFileExists(conf_tray_icon):
@@ -172,18 +262,8 @@ if __name__ == "__main__":
 			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
 			exit(1) 
 		else:
-			print ("   .- Icon {} ".format(conf_tray_icon))
+			print ("   .- App tray icon {} ".format(conf_tray_icon))
 		
-		conf_notification_sound=SCRIPT_PATH+PATH_SEPARATOR+config['config']['notification_sound']
-		if not checkIfFileExists(conf_notification_sound):
-			osNotify(
-				"pyNotify ERROR",
-				"{} file does not exist.\nCheck your config file: {}".format(conf_notification_sound,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
-			)
-			print ("ERROR: Notification sound file {} not found".format(conf_notification_sound))
-			exit(1) 
-		else:
-			print ("   .- Notif {} ".format(conf_notification_sound))
 		
 		pyNotify_icon=Image.open(conf_tray_icon) 
 		print("...built tray icon image")
@@ -195,6 +275,8 @@ if __name__ == "__main__":
 				MenuItem("Do not disturb", tray_icon_dnd, checked=lambda item_dnd: on_dnd),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("Open Gotify", tray_icon_gotify),
+				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+				MenuItem("Open Ntfy", tray_icon_gotify),
     			MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("About",
 					Menu(
@@ -202,9 +284,11 @@ if __name__ == "__main__":
 						MenuItem(' Fernando Seoane',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem(' -Jun 2023-',action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 						MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem(" Config: {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem(" Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-						MenuItem(" Token:  {}".format(conf_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Config:        {}".format(configFile),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Gotify Server: {}".format(conf_gotify_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Gotify Token:  {}".format(conf_gotify_client_token),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Ntfy Server:   {}".format(conf_ntfy_url),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
+						MenuItem(" Ntfy Topics:   {}".format(conf_ntfy_topics),action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 					)
 				),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
@@ -220,14 +304,26 @@ if __name__ == "__main__":
 		print("...placed icon in tray")
 
 		# Delay 3 minutes to ensure network is ready
-		print("...delayed start (3 minutes) to ensure network is ready")
-		time.sleep(180)
+		print("...delayed start to ensure network is ready")
+		isAvailable=False
+		counter=0
+		sys.stdout.write("[%s]" % (" " * 12))
+		sys.stdout.flush()
+		sys.stdout.write("\b" * (12+1)) # return to start of line, after '['
+		while ((not isAvailable) and (counter < 36)):
+			time.sleep(5)
+			counter += 1
+			isAvailable=checkIfInternetIsAvailable()
+			sys.stdout.write("-")
+			sys.stdout.flush()
+		sys.stdout.write("]\n")
 
-		# Run the gotify listener asynchronously in a second thread
+		# Run the listeners asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
-			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_client_token,conf_notification_sound))
-	
+			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound))
+
+   
 	except Exception as error:
 		# handle the exception
 		print("An exception occurred:", error)
