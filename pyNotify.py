@@ -203,7 +203,7 @@ if __name__ == "__main__":
 		
 		if ('gotify' in config):
 			print("...reading Gotify settings...")
-			if config['gotify']['gotify_url']:
+			if 'gotify_url' in config['gotify']:
 				conf_gotify_url=config['gotify']['gotify_url']
 				if (conf_gotify_url=="https://gotify-host:port"):
 					osNotify(
@@ -223,7 +223,7 @@ if __name__ == "__main__":
 				have_Gotify = False
 
 
-			if config['gotify']['gotify_client_token']:
+			if 'gotify_client_token' in config['gotify']:
 				conf_gotify_client_token=config['gotify']['gotify_client_token']
 				if ((conf_gotify_client_token=="") or (conf_gotify_client_token=="GotifyClientToken")):
 					osNotify(
@@ -241,7 +241,7 @@ if __name__ == "__main__":
 				conf_gotify_sound=""
 				have_Gotify = False
      
-			if config['gotify']['gotify_sound']:
+			if 'gotify_sound' in config['gotify']:
 				conf_gotify_sound=config['gotify']['gotify_sound']
 				if (conf_gotify_sound==""):
 					osNotify(
@@ -314,20 +314,25 @@ if __name__ == "__main__":
 			conf_ntfy_sound=""
 			have_Ntfy = False
 		
-		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
-		if not checkIfFileExists(conf_tray_icon):
-			osNotify(
-				"pyNotify ERROR",
-				"{} file does not exist. Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
-			)
-			print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
-			exit(1) 
+		if 'config' in config:
+			if 'tray_icon' in config['config']:
+				conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
+				if not checkIfFileExists(conf_tray_icon):
+					osNotify(
+						"pyNotify ERROR",
+						"{} file does not exist. Check your config file: {}".format(conf_tray_icon,SCRIPT_PATH+PATH_SEPARATOR+'pyNotify.conf')
+					)
+					print ("ERROR: Tray icon file {} not found".format(conf_tray_icon))
+					exit(1) 
+				else:
+					print ("   .- App tray icon {} ".format(conf_tray_icon))
+		
+				pyNotify_icon=Image.open(conf_tray_icon) 
+				print("...built tray icon image")
+			else:
+				pyNotify_icon=Image.open(SCRIPT_PATH+PATH_SEPARATOR+"notificatoin.png") 
 		else:
-			print ("   .- App tray icon {} ".format(conf_tray_icon))
-		
-		
-		pyNotify_icon=Image.open(conf_tray_icon) 
-		print("...built tray icon image")
+			pyNotify_icon=Image.open(SCRIPT_PATH+PATH_SEPARATOR+"notificatoin.png") 
 
 
 		tray_icon = Icon("pyNotify", pyNotify_icon, title="pyNotify", visible=True,
