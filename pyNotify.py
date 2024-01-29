@@ -201,8 +201,8 @@ if __name__ == "__main__":
 		else:
 			print ("...config file {} in use".format(configFile))
 		
-		if (config['gotify']):
-			print("Reading Gotify settings...")
+		if ('gotify' in config):
+			print("...reading Gotify settings...")
 			if config['gotify']['gotify_url']:
 				conf_gotify_url=config['gotify']['gotify_url']
 				if (conf_gotify_url=="https://gotify-host:port"):
@@ -258,9 +258,9 @@ if __name__ == "__main__":
 			conf_gotify_sound=""
 			have_Gotify = False
 
-		if (config['ntfy']):
-			print("Reading Ntfy settings...")
-			if config['ntfy']['ntfy_url']:
+		if ('ntfy' in config):
+			print("...reading Ntfy settings...")
+			if 'ntfy.ntfy_url' in config:
 				conf_ntfy_url=config['ntfy']['ntfy_url']
 				if (conf_ntfy_url=="https://ntfy-host:port"):
 					osNotify(
@@ -279,7 +279,7 @@ if __name__ == "__main__":
 				conf_ntfy_sound=""
 				have_Ntfy = False
 			
-			if config['ntfy']['ntfy_topics']:
+			if 'ntfy.ntfy_topics' in config:
 				conf_ntfy_topics=config['ntfy']['ntfy_topics']
 				if (conf_ntfy_topics==""):
 					osNotify(
@@ -297,7 +297,7 @@ if __name__ == "__main__":
 				conf_ntfy_sound=""
 				have_Ntfy = False
 
-			if config['ntfy']['ntfy_sound']:
+			if 'ntfy.ntfy_sound' in config:
 				conf_ntfy_sound=config['ntfy']['ntfy_sound']
 				if (conf_ntfy_sound==""):
 					osNotify(
