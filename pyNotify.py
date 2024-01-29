@@ -201,77 +201,104 @@ if __name__ == "__main__":
 		else:
 			print ("...config file {} in use".format(configFile))
 		
-		conf_gotify_url=config['gotify']['gotify_url']
-		if (conf_gotify_url=="https://gotify-host:port"):
-			osNotify(
-					"pyNotify ERROR",
-					"Configure {} with your values.".format(configFile)
-				)
-			print ("ERROR: Configure your values at {}".format(configFile))
-			exit(1) 
-		else:
-			on_gotify_url=conf_gotify_url
-			print ("   .- Gotify URL {} ".format(conf_gotify_url))
-			have_Gotify = True
+		if (config['gotify']):
+			if config['gotify']['gotify_url']:
+				conf_gotify_url=config['gotify']['gotify_url']
+				if (conf_gotify_url=="https://gotify-host:port"):
+					osNotify(
+							"pyNotify ERROR",
+							"Configure {} with your values.".format(configFile)
+						)
+					print ("ERROR: Configure your values at {}".format(configFile))
+					exit(1) 
+				else:
+					on_gotify_url=conf_gotify_url
+					print ("   .- Gotify URL {} ".format(conf_gotify_url))
+					have_Gotify = True
+			else:
+					have_Gotify = False
 
-		conf_gotify_client_token=config['gotify']['gotify_client_token']
-		if ((conf_gotify_client_token=="") or (conf_gotify_client_token=="GotifyClientToken")):
-			osNotify(
-					"pyNotify ERROR",
-					"Configure {} with your values.".format(configFile)
-				)
-			print ("ERROR: Configure your values at {}".format(configFile))
-			exit(1) 
-		else:
-			print ("   .- Gotify client token {} ".format(conf_gotify_client_token))
-			have_Gotify = (have_Gotify and True)
 
-		conf_gotify_sound=config['gotify']['gotify_sound']
-		if (conf_gotify_sound==""):
-			osNotify(
-					"pyNotify ERROR",
-					"Configure {} with your values.".format(configFile)
-				)
-			print ("ERROR: Configure your values at {}".format(configFile))
-			exit(1) 
+			if config['gotify']['gotify_client_token']:
+				conf_gotify_client_token=config['gotify']['gotify_client_token']
+				if ((conf_gotify_client_token=="") or (conf_gotify_client_token=="GotifyClientToken")):
+					osNotify(
+							"pyNotify ERROR",
+							"Configure {} with your values.".format(configFile)
+						)
+					print ("ERROR: Configure your values at {}".format(configFile))
+					exit(1) 
+				else:
+					print ("   .- Gotify client token {} ".format(conf_gotify_client_token))
+					have_Gotify = (have_Gotify and True)
+			else:
+				have_Gotify = False
+     
+			if config['gotify']['gotify_sound']:
+				conf_gotify_sound=config['gotify']['gotify_sound']
+				if (conf_gotify_sound==""):
+					osNotify(
+							"pyNotify ERROR",
+							"Configure {} with your values.".format(configFile)
+						)
+					print ("ERROR: Configure your values at {}".format(configFile))
+					exit(1) 
+				else:
+					print ("   .- Gotify sound {} ".format(conf_gotify_sound))
 		else:
-			print ("   .- Gotify sound {} ".format(conf_gotify_sound))
+			conf_gotify_url=""
+			conf_gotify_client_token=""
+			conf_gotify_sound=""
+			have_Gotify = False
 
-		conf_ntfy_url=config['ntfy']['ntfy_url']
-		if (conf_ntfy_url=="https://ntfy-host:port"):
-			osNotify(
-					"pyNotify ERROR",
-					"Configure {} with your values.".format(configFile)
-				)
-			print ("ERROR: Configure your values at {}".format(configFile))
-			exit(1) 
-		else:
-			on_ntfy_url=conf_ntfy_url
-			print ("   .- Ntfy URL {} ".format(conf_ntfy_url))
-			have_Ntfy = True
-		
-		conf_ntfy_topics=config['ntfy']['ntfy_topics']
-		if (conf_ntfy_topics==""):
-			osNotify(
-					"pyNotify ERROR",
-					"Configure {} with your values.".format(configFile)
-				)
-			print ("ERROR: Configure your values at {}".format(configFile))
-			exit(1) 
-		else:
-			print ("   .- Ntfy topics {} ".format(conf_ntfy_topics))
-			have_Ntfy = (have_Ntfy and True)
+		if (config['ntfy']):
+			if config['ntfy']['ntfy_url']:
+				conf_ntfy_url=config['ntfy']['ntfy_url']
+				if (conf_ntfy_url=="https://ntfy-host:port"):
+					osNotify(
+							"pyNotify ERROR",
+							"Configure {} with your values.".format(configFile)
+						)
+					print ("ERROR: Configure your values at {}".format(configFile))
+					exit(1) 
+				else:
+					on_ntfy_url=conf_ntfy_url
+					print ("   .- Ntfy URL {} ".format(conf_ntfy_url))
+					have_Ntfy = True
+			else:
+				have_Ntfy = False
+			
+			if config['ntfy']['ntfy_topics']:
+				conf_ntfy_topics=config['ntfy']['ntfy_topics']
+				if (conf_ntfy_topics==""):
+					osNotify(
+							"pyNotify ERROR",
+							"Configure {} with your values.".format(configFile)
+						)
+					print ("ERROR: Configure your values at {}".format(configFile))
+					exit(1) 
+				else:
+					print ("   .- Ntfy topics {} ".format(conf_ntfy_topics))
+					have_Ntfy = (have_Ntfy and True)
+			else:
+				have_Ntfy = False
 
-		conf_ntfy_sound=config['ntfy']['ntfy_sound']
-		if (conf_ntfy_sound==""):
-			osNotify(
-					"pyNotify ERROR",
-					"Configure {} with your values.".format(configFile)
-				)
-			print ("ERROR: Configure your values at {}".format(configFile))
-			exit(1) 
+			if config['ntfy']['ntfy_sound']:
+				conf_ntfy_sound=config['ntfy']['ntfy_sound']
+				if (conf_ntfy_sound==""):
+					osNotify(
+							"pyNotify ERROR",
+							"Configure {} with your values.".format(configFile)
+						)
+					print ("ERROR: Configure your values at {}".format(configFile))
+					exit(1) 
+				else:
+					print ("   .- Ntfy sound {} ".format(conf_ntfy_sound))
 		else:
-			print ("   .- Ntfy sound {} ".format(conf_ntfy_sound))
+			conf_ntfy_url=""
+			conf_ntfy_topics=""
+			conf_ntfy_sound=""
+			have_Ntfy = False
 		
 		conf_tray_icon=SCRIPT_PATH+PATH_SEPARATOR+config['config']['tray_icon']
 		if not checkIfFileExists(conf_tray_icon):
