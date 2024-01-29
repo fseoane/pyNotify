@@ -342,7 +342,7 @@ if __name__ == "__main__":
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("Open Gotify", tray_icon_gotify),
 				MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
-				MenuItem("Open Ntfy", tray_icon_gotify),
+				MenuItem("Open Ntfy", tray_icon_ntfy),
     			MenuItem("───────────────────────",action=None, checked=None, radio=False, default=False, visible=True, enabled=False),
 				MenuItem("About",
 					Menu(
