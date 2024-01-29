@@ -260,7 +260,7 @@ if __name__ == "__main__":
 
 		if ('ntfy' in config):
 			print("...reading Ntfy settings...")
-			if 'ntfy.ntfy_url' in config:
+			if 'ntfy_url' in config:
 				conf_ntfy_url=config['ntfy']['ntfy_url']
 				if (conf_ntfy_url=="https://ntfy-host:port"):
 					osNotify(
@@ -279,7 +279,7 @@ if __name__ == "__main__":
 				conf_ntfy_sound=""
 				have_Ntfy = False
 			
-			if 'ntfy.ntfy_topics' in config:
+			if 'ntfy_topics' in config:
 				conf_ntfy_topics=config['ntfy']['ntfy_topics']
 				if (conf_ntfy_topics==""):
 					osNotify(
@@ -297,7 +297,7 @@ if __name__ == "__main__":
 				conf_ntfy_sound=""
 				have_Ntfy = False
 
-			if 'ntfy.ntfy_sound' in config:
+			if 'ntfy_sound' in config:
 				conf_ntfy_sound=config['ntfy']['ntfy_sound']
 				if (conf_ntfy_sound==""):
 					osNotify(
