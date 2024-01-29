@@ -202,6 +202,7 @@ if __name__ == "__main__":
 			print ("...config file {} in use".format(configFile))
 		
 		if (config['gotify']):
+			print("Reading Gotify settings...")
 			if config['gotify']['gotify_url']:
 				conf_gotify_url=config['gotify']['gotify_url']
 				if (conf_gotify_url=="https://gotify-host:port"):
@@ -258,6 +259,7 @@ if __name__ == "__main__":
 			have_Gotify = False
 
 		if (config['ntfy']):
+			print("Reading Ntfy settings...")
 			if config['ntfy']['ntfy_url']:
 				conf_ntfy_url=config['ntfy']['ntfy_url']
 				if (conf_ntfy_url=="https://ntfy-host:port"):
