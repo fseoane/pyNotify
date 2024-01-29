@@ -57,6 +57,7 @@ def play_ogg(file_path):
 async def log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound):
 	global on_mute
 	global on_dnd 
+
 	
 	async_gotify = AsyncGotify(
 		base_url=conf_gotify_url,
@@ -105,11 +106,20 @@ async def log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_n
 								osNotify(data["topic"]+titl,data["message"],"notification")
 
 
-async def log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
-	await asyncio.gather(
-		log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound),
-		log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound),
-	)
+async def log_push_messages(have_Gotify,have_Ntfy,tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound):
+	if have_Gotify and have_Ntfy:
+		await asyncio.gather(
+			log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound),
+			log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound),
+		)
+	if have_Gotify and not have_Ntfy:
+		await asyncio.gather(
+			log_gotify_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound),
+		)
+	if not have_Gotify and have_Ntfy:
+		await asyncio.gather(
+			log_ntfy_push_messages(tray_icon,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound),
+		)
 
 def tray_icon_mute(tray_icon, item_mute):
 	global on_mute
@@ -138,7 +148,8 @@ def tray_icon_quit(tray_icon, item):
 if __name__ == "__main__":
 	on_mute = False
 	on_dnd = False
-    
+	have_Gotify = False
+	have_Ntfy = False
 
 	PATH_SEPARATOR = '/'
 	SCRIPT_PATH = getcwd()
@@ -201,6 +212,7 @@ if __name__ == "__main__":
 		else:
 			on_gotify_url=conf_gotify_url
 			print ("   .- Gotify URL {} ".format(conf_gotify_url))
+			have_Gotify = True
 
 		conf_gotify_client_token=config['gotify']['gotify_client_token']
 		if ((conf_gotify_client_token=="") or (conf_gotify_client_token=="GotifyClientToken")):
@@ -212,6 +224,7 @@ if __name__ == "__main__":
 			exit(1) 
 		else:
 			print ("   .- Gotify client token {} ".format(conf_gotify_client_token))
+			have_Gotify = (have_Gotify and True)
 
 		conf_gotify_sound=config['gotify']['gotify_sound']
 		if (conf_gotify_sound==""):
@@ -235,6 +248,7 @@ if __name__ == "__main__":
 		else:
 			on_ntfy_url=conf_ntfy_url
 			print ("   .- Ntfy URL {} ".format(conf_ntfy_url))
+			have_Ntfy = True
 		
 		conf_ntfy_topics=config['ntfy']['ntfy_topics']
 		if (conf_ntfy_topics==""):
@@ -246,6 +260,7 @@ if __name__ == "__main__":
 			exit(1) 
 		else:
 			print ("   .- Ntfy topics {} ".format(conf_ntfy_topics))
+			have_Ntfy = (have_Ntfy and True)
 
 		conf_ntfy_sound=config['ntfy']['ntfy_sound']
 		if (conf_ntfy_sound==""):
@@ -326,7 +341,7 @@ if __name__ == "__main__":
 		# Run the listeners asynchronously in a second thread
 		with Runner() as runner:
 			print("...starting loop")
-			runner.run(log_push_messages(tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound))
+			runner.run(log_push_messages(have_Gotify,have_Ntfy,tray_icon,conf_gotify_url,conf_gotify_client_token,conf_gotify_sound,conf_ntfy_url,conf_ntfy_topics,conf_ntfy_sound))
 
    
 	except Exception as error:
