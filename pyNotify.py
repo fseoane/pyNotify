@@ -216,7 +216,10 @@ if __name__ == "__main__":
 					print ("   .- Gotify URL {} ".format(conf_gotify_url))
 					have_Gotify = True
 			else:
-					have_Gotify = False
+				conf_gotify_url=""
+				conf_gotify_client_token=""
+				conf_gotify_sound=""
+				have_Gotify = False
 
 
 			if config['gotify']['gotify_client_token']:
@@ -232,6 +235,9 @@ if __name__ == "__main__":
 					print ("   .- Gotify client token {} ".format(conf_gotify_client_token))
 					have_Gotify = (have_Gotify and True)
 			else:
+				conf_gotify_url=""
+				conf_gotify_client_token=""
+				conf_gotify_sound=""
 				have_Gotify = False
      
 			if config['gotify']['gotify_sound']:
@@ -266,6 +272,9 @@ if __name__ == "__main__":
 					print ("   .- Ntfy URL {} ".format(conf_ntfy_url))
 					have_Ntfy = True
 			else:
+				conf_ntfy_url=""
+				conf_ntfy_topics=""
+				conf_ntfy_sound=""
 				have_Ntfy = False
 			
 			if config['ntfy']['ntfy_topics']:
@@ -281,6 +290,9 @@ if __name__ == "__main__":
 					print ("   .- Ntfy topics {} ".format(conf_ntfy_topics))
 					have_Ntfy = (have_Ntfy and True)
 			else:
+				conf_ntfy_url=""
+				conf_ntfy_topics=""
+				conf_ntfy_sound=""
 				have_Ntfy = False
 
 			if config['ntfy']['ntfy_sound']:
